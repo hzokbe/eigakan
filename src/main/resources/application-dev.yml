@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DB}?authSource=admin
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

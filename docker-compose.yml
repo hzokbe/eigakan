@@ -1,0 +1,35 @@
+services:
+  eigakan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eigakan
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8080"
+    networks:
+      - eigakan
+    environment:
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_DB=${MONGO_DB}
+  mongo:
+    image: mongo
+    container_name: eigakan-db
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_DB}
+    networks:
+      - eigakan
+    volumes:
+      - eigakan-data:/data/db
+networks:
+  eigakan:
+    name: eigakan
+volumes:
+  eigakan-data:
+    name: eigakan

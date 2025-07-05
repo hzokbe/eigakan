@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: eigakan
+  profiles:
+    active: dev
