@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
@@ -100,6 +101,10 @@ public class MovieService {
         return new MovieResponse(movie.getId(), title);
     }
 
+    @Caching(evict = {
+        @CacheEvict(value = "movies", key = "#id"),
+        @CacheEvict(value = "movies", key = "'all'")
+    })
     public void deleteById(String id) {
         var optionalMovie = repository.findById(id);
 
