@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
 import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
+import com.hzokbe.eigakan.exception.movie.MovieNotFoundException;
 import com.hzokbe.eigakan.model.exception.response.ExceptionResponse;
 
 @RestControllerAdvice
@@ -30,6 +31,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse alreadyRegisteredMovieExceptionHandler(AlreadyRegisteredMovieException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(MovieNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse movieNotFoundExceptionHandler(MovieNotFoundException exception) {
         return new ExceptionResponse(exception.getMessage());
     }
 }
