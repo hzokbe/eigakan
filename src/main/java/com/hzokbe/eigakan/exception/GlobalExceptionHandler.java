@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.hzokbe.eigakan.exception.genre.InvalidGenreException;
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
 import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
 import com.hzokbe.eigakan.exception.movie.MovieNotFoundException;
@@ -38,6 +39,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse movieNotFoundExceptionHandler(MovieNotFoundException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidGenreException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse invalidGenreExceptionHandler(InvalidGenreException exception) {
         return new ExceptionResponse(exception.getMessage());
     }
 }
