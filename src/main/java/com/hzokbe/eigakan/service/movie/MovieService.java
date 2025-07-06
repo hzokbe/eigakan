@@ -3,6 +3,8 @@ package com.hzokbe.eigakan.service.movie;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +66,8 @@ public class MovieService {
         return new MovieResponse(movie.getId(), movie.getTitle());
     }
 
+    @CachePut(value = "movies", key = "#id")
+    @CacheEvict(value = "movies", key = "'all'")
     public MovieResponse update(String id, MovieRequest request) {
         var title = request.getTitle();
 
