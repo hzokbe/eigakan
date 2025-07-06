@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
 import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
+import com.hzokbe.eigakan.exception.movie.MovieNotFoundException;
 import com.hzokbe.eigakan.model.movie.Movie;
 import com.hzokbe.eigakan.model.movie.request.MovieRequest;
 import com.hzokbe.eigakan.model.movie.response.MovieResponse;
@@ -45,5 +46,17 @@ public class MovieService {
 
     public List<MovieResponse> findAll() {
         return repository.findAll().stream().map(m -> new MovieResponse(m.getId(), m.getTitle())).toList();
+    }
+
+    public MovieResponse findById(String id) {
+        var optionalMovie = repository.findById(id);
+
+        if (optionalMovie.isEmpty()) {
+            throw new MovieNotFoundException("movie not found");
+        }
+
+        var movie = optionalMovie.get();
+
+        return new MovieResponse(movie.getId(), movie.getTitle());
     }
 }
