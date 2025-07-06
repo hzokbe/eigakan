@@ -2,6 +2,11 @@ spring:
   data:
     mongodb:
       uri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DB}?authSource=admin
+    redis:
+      host: redis
+      port: 6379
   jpa:
     hibernate:
       ddl-auto: create-drop
+  cache:
+    type: redis
