@@ -1,7 +1,9 @@
 package com.hzokbe.eigakan.service.movie;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
@@ -44,8 +46,9 @@ public class MovieService {
         return new MovieResponse(movie.getId(), title);
     }
 
+    @Cacheable(value = "movies", key = "'all'")
     public List<MovieResponse> findAll() {
-        return repository.findAll().stream().map(m -> new MovieResponse(m.getId(), m.getTitle())).toList();
+        return repository.findAll().stream().map(m -> new MovieResponse(m.getId(), m.getTitle())).collect(Collectors.toList());
     }
 
     public MovieResponse findById(String id) {
