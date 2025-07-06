@@ -55,7 +55,7 @@ public class MovieService {
 
     @Cacheable(value = "movies", key = "'all'")
     public List<MovieResponse> findAll() {
-        return repository.findAll().stream().map(m -> new MovieResponse(m.getId(), m.getTitle())).collect(Collectors.toList());
+        return repository.findAll().stream().map(m -> new MovieResponse(m.getId(), m.getTitle(), m.getGenre())).collect(Collectors.toList());
     }
 
     @Cacheable(value = "movies", key = "#id")
