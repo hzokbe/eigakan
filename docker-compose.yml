@@ -27,9 +27,20 @@ services:
       - eigakan
     volumes:
       - eigakan-data:/data/db
+  redis:
+    image: redis
+    container_name: eigakan-cache
+    ports:
+      - "6379:6379"
+    networks:
+      - eigakan
+    volumes:
+      - eigakan-cache:/data
 networks:
   eigakan:
     name: eigakan
 volumes:
   eigakan-data:
     name: eigakan
+  eigakan-cache:
+    name: eigakan-cache
