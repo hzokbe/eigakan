@@ -68,7 +68,7 @@ public class MovieService {
 
         var movie = optionalMovie.get();
 
-        return new MovieResponse(movie.getId(), movie.getTitle());
+        return new MovieResponse(movie.getId(), movie.getTitle(), movie.getGenre());
     }
 
     public MovieResponse update(String id, MovieRequest request) {
