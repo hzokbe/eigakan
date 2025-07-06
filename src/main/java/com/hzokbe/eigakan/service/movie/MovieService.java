@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.hzokbe.eigakan.exception.genre.InvalidGenreException;
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
 import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
 import com.hzokbe.eigakan.exception.movie.MovieNotFoundException;
@@ -39,11 +40,17 @@ public class MovieService {
             throw new AlreadyRegisteredMovieException("movie already registered");
         }
 
-        var movie = new Movie(title);
+        var genre = request.getGenre();
+
+        if (genre == null) {
+            throw new InvalidGenreException("genre cannot be null");
+        }
+
+        var movie = new Movie(title, genre);
 
         repository.save(movie);
 
-        return new MovieResponse(movie.getId(), title);
+        return new MovieResponse(movie.getId(), title, genre);
     }
 
     @Cacheable(value = "movies", key = "'all'")
