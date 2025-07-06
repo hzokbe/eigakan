@@ -3,7 +3,10 @@ package com.hzokbe.eigakan.service.movie;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.hzokbe.eigakan.exception.genre.InvalidGenreException;
@@ -71,6 +74,8 @@ public class MovieService {
         return new MovieResponse(movie.getId(), movie.getTitle(), movie.getGenre());
     }
 
+    @CachePut(value = "movies", key = "#id")
+    @CacheEvict(value = "movies", key = "'all'")
     public MovieResponse update(String id, MovieRequest request) {
         var title = request.getTitle();
 
@@ -111,6 +116,10 @@ public class MovieService {
         return new MovieResponse(movie.getId(), title, genre);
     }
 
+    @Caching(evict = {
+        @CacheEvict(value = "movies", key = "#id"),
+        @CacheEvict(value = "movies", key = "'all'")
+    })
     public void deleteById(String id) {
         var optionalMovie = repository.findById(id);
 
