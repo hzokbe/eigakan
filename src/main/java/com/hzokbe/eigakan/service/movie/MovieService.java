@@ -59,4 +59,36 @@ public class MovieService {
 
         return new MovieResponse(movie.getId(), movie.getTitle());
     }
+
+    public MovieResponse update(String id, MovieRequest request) {
+        var title = request.getTitle();
+
+        if (title == null) {
+            throw new InvalidMovieTitleException("title cannot be null");
+        }
+
+        if (title.isBlank()) {
+            throw new InvalidMovieTitleException("title cannot be blank");
+        }
+
+        title = title.trim();
+
+        if (repository.existsByTitle(title)) {
+            throw new AlreadyRegisteredMovieException("movie already registered");
+        }
+
+        var optionalMovie = repository.findById(id);
+
+        if (optionalMovie.isEmpty()) {
+            throw new MovieNotFoundException("movie not found");
+        }
+
+        var movie = optionalMovie.get();
+
+        movie.setTitle(title);
+
+        repository.save(movie);
+
+        return new MovieResponse(movie.getId(), title);
+    }
 }
