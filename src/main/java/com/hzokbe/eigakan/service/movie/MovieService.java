@@ -91,4 +91,14 @@ public class MovieService {
 
         return new MovieResponse(movie.getId(), title);
     }
+
+    public void deleteById(String id) {
+        var optionalMovie = repository.findById(id);
+
+        if (optionalMovie.isEmpty()) {
+            throw new MovieNotFoundException("movie not found");
+        }
+
+        repository.deleteById(id);
+    }
 }
