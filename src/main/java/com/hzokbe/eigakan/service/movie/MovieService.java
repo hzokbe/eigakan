@@ -51,6 +51,7 @@ public class MovieService {
         return repository.findAll().stream().map(m -> new MovieResponse(m.getId(), m.getTitle())).collect(Collectors.toList());
     }
 
+    @Cacheable(value = "movies", key = "#id")
     public MovieResponse findById(String id) {
         var optionalMovie = repository.findById(id);
 
