@@ -5,6 +5,9 @@ public class MovieResponse {
 
     private String title;
 
+    public MovieResponse() {
+    }
+
     public MovieResponse(String id, String title) {
         this.id = id;
         
