@@ -88,6 +88,12 @@ public class MovieService {
             throw new AlreadyRegisteredMovieException("movie already registered");
         }
 
+        var genre = request.getGenre();
+
+        if (genre == null) {
+            throw new InvalidGenreException("genre cannot be null");
+        }
+
         var optionalMovie = repository.findById(id);
 
         if (optionalMovie.isEmpty()) {
@@ -98,9 +104,11 @@ public class MovieService {
 
         movie.setTitle(title);
 
+        movie.setGenre(genre);
+
         repository.save(movie);
 
-        return new MovieResponse(movie.getId(), title);
+        return new MovieResponse(movie.getId(), title, genre);
     }
 
     public void deleteById(String id) {
