@@ -1,8 +1,14 @@
 package com.hzokbe.eigakan.controller.person;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hzokbe.eigakan.model.person.request.PersonRequest;
+import com.hzokbe.eigakan.model.person.response.PersonResponse;
 import com.hzokbe.eigakan.service.person.PersonService;
 
 @RestController
@@ -12,5 +18,10 @@ public class PersonController {
 
     public PersonController(PersonService service) {
         this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<PersonResponse> save(@RequestBody PersonRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request));
     }
 }
