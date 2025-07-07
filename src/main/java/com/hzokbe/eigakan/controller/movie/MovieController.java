@@ -32,7 +32,7 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<MovieResponse>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
