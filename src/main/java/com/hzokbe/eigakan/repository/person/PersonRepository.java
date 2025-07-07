@@ -7,4 +7,5 @@ import com.hzokbe.eigakan.model.person.Person;
 
 @Repository
 public interface PersonRepository extends MongoRepository<Person, String> {
+    boolean existsByNameAndLastName(String name, String lastName);
 }
