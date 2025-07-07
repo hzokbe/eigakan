@@ -3,6 +3,7 @@ package com.hzokbe.eigakan.controller.movie;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hzokbe.eigakan.model.movie.request.MovieRequest;
 import com.hzokbe.eigakan.model.movie.response.MovieResponse;
+import com.hzokbe.eigakan.model.paginated.response.PaginatedResponse;
 import com.hzokbe.eigakan.service.movie.MovieService;
 
 @RestController
@@ -35,6 +37,11 @@ public class MovieController {
     @GetMapping("/all")
     public ResponseEntity<List<MovieResponse>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
+    }
+
+    @GetMapping
+    public ResponseEntity<PaginatedResponse<MovieResponse>> findAll(Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAll(pageable));
     }
 
     @GetMapping("/{id}")
