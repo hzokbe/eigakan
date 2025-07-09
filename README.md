@@ -20,3 +20,20 @@ To start the application, run:
 ```bash
 docker compose up -d
 ```
+
+## Endpoints
+
+### `POST /movies`
+
+Request example:
+
+```json
+{
+    "title": "Interestelar",
+    "genre": "SCIENCE_FICTION"
+}
+```
+
+Response example:
+
+`201 CREATED`
