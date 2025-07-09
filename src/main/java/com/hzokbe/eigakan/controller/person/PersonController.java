@@ -1,7 +1,10 @@
 package com.hzokbe.eigakan.controller.person;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +26,10 @@ public class PersonController {
     @PostMapping
     public ResponseEntity<PersonResponse> save(@RequestBody PersonRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PersonResponse>> findAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 }
