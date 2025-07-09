@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.hzokbe.eigakan.exception.person.AlreadyRegisteredPersonException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonLastNameException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonNameException;
+import com.hzokbe.eigakan.exception.person.PersonNotFoundException;
 import com.hzokbe.eigakan.model.person.Person;
 import com.hzokbe.eigakan.model.person.request.PersonRequest;
 import com.hzokbe.eigakan.model.person.response.PersonResponse;
@@ -58,5 +59,17 @@ public class PersonService {
 
     public List<PersonResponse> findAll() {
         return repository.findAll().stream().map(p -> new PersonResponse(p.getId(), p.getName(), p.getLastName())).toList();
+    }
+
+    public PersonResponse findById(String id) {
+        var optionalPerson = repository.findById(id);
+
+        if (optionalPerson.isEmpty()) {
+            throw new PersonNotFoundException("person not found");
+        }
+
+        var person = optionalPerson.get();
+
+        return new PersonResponse(person.getId(), person.getName(), person.getLastName());
     }
 }
