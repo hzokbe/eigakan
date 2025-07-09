@@ -1,5 +1,7 @@
 package com.hzokbe.eigakan.service.person;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.hzokbe.eigakan.exception.person.AlreadyRegisteredPersonException;
@@ -52,5 +54,9 @@ public class PersonService {
         repository.save(person);
 
         return new PersonResponse(person.getId(), name, lastName);
+    }
+
+    public List<PersonResponse> findAll() {
+        return repository.findAll().stream().map(p -> new PersonResponse(p.getId(), p.getName(), p.getLastName())).toList();
     }
 }
