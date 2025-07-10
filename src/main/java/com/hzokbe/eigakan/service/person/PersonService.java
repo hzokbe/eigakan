@@ -118,4 +118,14 @@ public class PersonService {
 
         return new PersonResponse(person.getId(), name, lastName);
     }
+
+    public void deleteById(String id) {
+        var optionalPerson = repository.findById(id);
+
+        if (optionalPerson.isEmpty()) {
+            throw new PersonNotFoundException("person not found");
+        }
+
+        repository.deleteById(id);
+    }
 }
