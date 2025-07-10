@@ -72,4 +72,50 @@ public class PersonService {
 
         return new PersonResponse(person.getId(), person.getName(), person.getLastName());
     }
+
+    public PersonResponse update(String id, PersonRequest request) {
+        var name = request.getName();
+
+        if (name == null) {
+            throw new InvalidPersonNameException("name cannot be null");
+        }
+
+        if (name.isBlank()) {
+            throw new InvalidPersonNameException("name cannot be blank");
+        }
+
+        name = name.trim();
+
+        var lastName = request.getLastName();
+
+        if (lastName == null) {
+            throw new InvalidPersonNameException("last name cannot be null");
+        }
+
+        if (lastName.isBlank()) {
+            throw new InvalidPersonNameException("last name cannot be blank");
+        }
+
+        lastName = lastName.trim();
+
+        if (repository.existsByNameAndLastName(name, lastName)) {
+            throw new AlreadyRegisteredPersonException("person already registered");
+        }
+
+        var optionalPerson = repository.findById(id);
+
+        if (optionalPerson.isEmpty()) {
+            throw new PersonNotFoundException("person not found");
+        }
+
+        var person = optionalPerson.get();
+
+        person.setName(name);
+
+        person.setLastName(lastName);
+
+        repository.save(person);
+
+        return new PersonResponse(person.getId(), name, lastName);
+    }
 }
