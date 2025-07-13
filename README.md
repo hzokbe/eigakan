@@ -29,6 +29,7 @@ Request example:
 
 ```json
 {
+    "id": "5a726dfb-4e29-41fe-8c32-04c1b13718bb",
     "title": "Interestelar",
     "genre": "SCIENCE_FICTION"
 }
@@ -37,3 +38,25 @@ Request example:
 Response example:
 
 `201 CREATED`
+
+### `GET /movies/all`
+
+Response example:
+
+`200 OK`
+
+```json
+[
+    {
+        "id": "5a726dfb-4e29-41fe-8c32-04c1b13718bb",
+        "title": "Interestelar", 
+        "genre": "SCIENCE_FICTION"
+    },
+    {
+        "id": "03e9eae9-d0b1-44c2-a9ff-70419082ecfc",
+        "title": "Pulp Fiction",
+        "genre": "CRIME"
+    }
+]
+```
+
