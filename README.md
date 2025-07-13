@@ -1,5 +1,7 @@
 # eigakan
 
+This project is a REST API that allows you to add, retrieve, update, and delete movies.
+
 ## Prerequisites
 
 - [Docker](https://www.docker.com/)
