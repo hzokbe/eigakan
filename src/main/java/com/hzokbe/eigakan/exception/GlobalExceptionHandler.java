@@ -3,6 +3,7 @@ package com.hzokbe.eigakan.exception;
 import com.hzokbe.eigakan.exception.person.AlreadyRegisteredPersonException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonLastNameException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonNameException;
+import com.hzokbe.eigakan.exception.person.PersonNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,6 +71,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse alreadyRegisteredPersonExceptionHandler(AlreadyRegisteredPersonException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(PersonNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse personNotFoundExceptionHandler(PersonNotFoundException exception) {
         return new ExceptionResponse(exception.getMessage());
     }
 }
