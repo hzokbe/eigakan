@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.exception;
 
+import com.hzokbe.eigakan.exception.person.InvalidPersonNameException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,6 +47,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse invalidGenreExceptionHandler(InvalidGenreException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidPersonNameException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse invalidPersonNameExceptionHandler(InvalidPersonNameException exception) {
         return new ExceptionResponse(exception.getMessage());
     }
 }
