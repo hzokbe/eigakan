@@ -1,6 +1,7 @@
 package com.hzokbe.eigakan.controller.user;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,6 +33,13 @@ public class UserController {
         return
             security
             .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(
+                r -> r
+                    .requestMatchers(HttpMethod.POST, "/sign-up")
+                    .permitAll()
+                    .anyRequest()
+                    .denyAll()
+            )
             .build();
     }
 }
