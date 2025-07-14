@@ -1,23 +1,21 @@
 package com.hzokbe.eigakan.model.user.response;
 
-import java.util.UUID;
-
 public class UserResponse {
-    private UUID id;
+    private String id;
 
     private String username;
 
-    public UserResponse(UUID id, String username) {
+    public UserResponse(String id, String username) {
         this.id = id;
 
         this.username = username;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
