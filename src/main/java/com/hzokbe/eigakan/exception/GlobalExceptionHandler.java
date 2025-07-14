@@ -4,6 +4,7 @@ import com.hzokbe.eigakan.exception.person.AlreadyRegisteredPersonException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonLastNameException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonNameException;
 import com.hzokbe.eigakan.exception.person.PersonNotFoundException;
+import com.hzokbe.eigakan.exception.user.InvalidPasswordException;
 import com.hzokbe.eigakan.exception.user.InvalidUsernameException;
 
 import org.springframework.http.HttpStatus;
@@ -87,6 +88,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse invalidUsernameExceptionHandler(InvalidUsernameException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse invalidPasswordExceptionHandler(InvalidPasswordException exception) {
         return new ExceptionResponse(exception.getMessage());
     }
 }
