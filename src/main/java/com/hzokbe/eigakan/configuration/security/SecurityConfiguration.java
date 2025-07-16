@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.configuration.security;
 
+import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration {
     @Value("${rsa.key.public}")
     private RSAPublicKey rsaPublicKey;
+
+    @Value("${rsa.key.private}")
+    private RSAPrivateKey rsaPrivateKey;
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
