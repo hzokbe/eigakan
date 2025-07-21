@@ -27,9 +27,13 @@ MONGO_PASSWORD=hzokbe
 
 These variables will be used by `Docker Compose` to initialize the services with the correct credentials.
 
-To start the application, run:
+To configure and start the application, run:
 
 ```bash
+openssl genrsa > src/main/resources/private.key
+
+openssl rsa -in src/main/resources/private.key -pubout -out src/main/resources/public.key
+
 docker compose up -d
 ```
 
