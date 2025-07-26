@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.service.user;
 
+import com.hzokbe.eigakan.service.jwt.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,14 @@ public class UserService {
 
     private final PasswordEncoder encoder;
 
-    public UserService(UserRepository repository, PasswordEncoder encoder) {
+    private final JwtService jwtService;
+
+    public UserService(UserRepository repository, PasswordEncoder encoder, JwtService jwtService) {
         this.repository = repository;
 
         this.encoder = encoder;
+
+        this.jwtService = jwtService;
     }
 
     public UserResponse signUp(UserRequest request) {
