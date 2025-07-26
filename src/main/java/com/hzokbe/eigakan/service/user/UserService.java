@@ -1,6 +1,8 @@
 package com.hzokbe.eigakan.service.user;
 
+import com.hzokbe.eigakan.model.jwt.JwtResponse;
 import com.hzokbe.eigakan.service.jwt.JwtService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,5 +70,9 @@ public class UserService {
         user = repository.save(user);
 
         return new UserResponse(user.getId(), username);
+    }
+
+    public JwtResponse signIn(Authentication authentication) {
+        return jwtService.generateJwt(authentication);
     }
 }
