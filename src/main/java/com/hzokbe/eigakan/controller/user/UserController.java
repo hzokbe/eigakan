@@ -3,6 +3,7 @@ package com.hzokbe.eigakan.controller.user;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.Authentication;
@@ -57,9 +58,12 @@ public class UserController {
                 r -> r
                     .requestMatchers(HttpMethod.POST, "/sign-up")
                     .permitAll()
+                    .requestMatchers(HttpMethod.POST, "/sign-in")
+                    .permitAll()
                     .anyRequest()
                     .denyAll()
             )
+            .httpBasic(Customizer.withDefaults())
             .build();
     }
 }
