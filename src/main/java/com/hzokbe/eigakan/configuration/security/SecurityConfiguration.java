@@ -10,13 +10,18 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
@@ -44,5 +49,27 @@ public class SecurityConfiguration {
     @Bean
     public JwtDecoder getJwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsaPublicKey).build();
+    }
+
+    @Bean
+    public SecurityFilterChain getSecurityFilterChain(HttpSecurity security) throws Exception {
+        return
+                security
+                        .csrf(AbstractHttpConfigurer::disable)
+                        .authorizeHttpRequests(
+                                r -> r
+                                        .requestMatchers(HttpMethod.POST, "/sign-up")
+                                        .permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/sign-in")
+                                        .permitAll()
+                                        .requestMatchers(HttpMethod.GET, "/movies/**")
+                                        .authenticated()
+                                        .requestMatchers(HttpMethod.GET, "/people/**")
+                                        .authenticated()
+                                        .anyRequest()
+                                        .denyAll()
+                        )
+                        .httpBasic(Customizer.withDefaults())
+                        .build();
     }
 }

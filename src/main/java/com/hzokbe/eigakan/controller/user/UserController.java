@@ -48,26 +48,4 @@ public class UserController {
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body("ok");
     }
-
-    @Bean
-    public SecurityFilterChain getSecurityFilterChain(HttpSecurity security) throws Exception {
-        return
-            security
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(
-                r -> r
-                    .requestMatchers(HttpMethod.POST, "/sign-up")
-                    .permitAll()
-                    .requestMatchers(HttpMethod.POST, "/sign-in")
-                    .permitAll()
-                    .requestMatchers(HttpMethod.GET, "/movies/**")
-                    .authenticated()
-                    .requestMatchers(HttpMethod.GET, "/people/**")
-                    .authenticated()
-                    .anyRequest()
-                    .denyAll()
-            )
-            .httpBasic(Customizer.withDefaults())
-            .build();
-    }
 }
