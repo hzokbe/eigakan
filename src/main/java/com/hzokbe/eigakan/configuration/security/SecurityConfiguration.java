@@ -2,6 +2,7 @@ package com.hzokbe.eigakan.configuration.security;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.stream.Collectors;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -15,12 +16,14 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -72,5 +75,18 @@ public class SecurityConfiguration {
                         .httpBasic(Customizer.withDefaults())
                         .oauth2ResourceServer(c -> c.jwt(Customizer.withDefaults()))
                         .build();
+    }
+
+    public JwtAuthenticationConverter getJwtAuthenticationConverter() {
+        var converter = new JwtAuthenticationConverter();
+
+        converter.setJwtGrantedAuthoritiesConverter(
+                jwt -> jwt.getClaimAsStringList("roles")
+                        .stream()
+                        .map(role -> new SimpleGrantedAuthority(role.toUpperCase()))
+                        .collect(Collectors.toList())
+        );
+
+        return converter;
     }
 }
