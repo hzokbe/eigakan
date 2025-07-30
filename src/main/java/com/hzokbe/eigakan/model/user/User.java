@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.model.user;
 
+import com.hzokbe.eigakan.model.role.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +15,8 @@ public class User {
 
     private String passwordHash;
 
+    private Role role = Role.USER;
+
     public User() {
     }
 
@@ -23,6 +26,16 @@ public class User {
         this.username = username;
 
         this.passwordHash = passwordHash;
+    }
+
+    public User(String username, String passwordHash, Role role) {
+        this.id = UUID.randomUUID().toString();
+
+        this.username = username;
+
+        this.passwordHash = passwordHash;
+
+        this.role = role;
     }
 
     public String getId() {
@@ -47,5 +60,13 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
