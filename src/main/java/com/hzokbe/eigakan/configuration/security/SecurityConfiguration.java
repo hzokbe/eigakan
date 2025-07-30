@@ -70,6 +70,7 @@ public class SecurityConfiguration {
                                         .denyAll()
                         )
                         .httpBasic(Customizer.withDefaults())
+                        .oauth2ResourceServer(c -> c.jwt(Customizer.withDefaults()))
                         .build();
     }
 }
