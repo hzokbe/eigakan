@@ -37,7 +37,7 @@ public class UserController {
 
         var cookie = ResponseCookie.from("jwt", jwtResponse.getJwt())
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/")
                 .maxAge(Duration.ofDays(1))
                 .sameSite("Strict")

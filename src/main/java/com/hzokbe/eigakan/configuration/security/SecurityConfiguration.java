@@ -24,6 +24,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -96,5 +97,26 @@ public class SecurityConfiguration {
         );
 
         return converter;
+    }
+
+    @Bean
+    public BearerTokenResolver getBearerTokenResolver() {
+        return request -> {
+            if (request.getCookies() != null) {
+                for (var cookie : request.getCookies()) {
+                    if ("jwt".equals(cookie.getName())) {
+                        return cookie.getValue();
+                    }
+                }
+            }
+
+            var authorization = request.getHeader("Authorization");
+
+            if (authorization != null && authorization.startsWith("Bearer ")) {
+                return authorization.substring(7);
+            }
+
+            return null;
+        };
     }
 }
