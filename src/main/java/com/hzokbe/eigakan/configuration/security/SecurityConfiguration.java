@@ -82,7 +82,11 @@ public class SecurityConfiguration {
                                         .denyAll()
                         )
                         .httpBasic(Customizer.withDefaults())
-                        .oauth2ResourceServer(configurer -> configurer.jwt(converter -> converter.jwtAuthenticationConverter(getJwtAuthenticationConverter())))
+                        .oauth2ResourceServer(
+                                configurer -> configurer.jwt(
+                                        converter -> converter.jwtAuthenticationConverter(getJwtAuthenticationConverter())
+                                ).bearerTokenResolver(getBearerTokenResolver())
+                        )
                         .build();
     }
 
