@@ -3,6 +3,10 @@ package com.hzokbe.eigakan.controller.movie;
 import java.util.List;
 import java.util.UUID;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +34,11 @@ public class MovieController {
     }
 
     @PostMapping
+    @Operation(
+            summary = "Register a new movie",
+            description = "Registers a new movie in the system using the information provided in the request body",
+            method = "POST"
+    )
     public ResponseEntity<MovieResponse> save(@RequestBody MovieRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request));
     }
