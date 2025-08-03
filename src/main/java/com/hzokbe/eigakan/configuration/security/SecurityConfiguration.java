@@ -78,6 +78,8 @@ public class SecurityConfiguration {
                                         .hasRole("ADMINISTRATOR")
                                         .requestMatchers(HttpMethod.DELETE, "/people/**")
                                         .hasRole("ADMINISTRATOR")
+                                        .requestMatchers(HttpMethod.GET, "/is-authenticated")
+                                        .authenticated()
                                         .anyRequest()
                                         .denyAll()
                         )
