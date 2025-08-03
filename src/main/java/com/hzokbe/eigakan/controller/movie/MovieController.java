@@ -44,6 +44,11 @@ public class MovieController {
     }
 
     @GetMapping("/all")
+    @Operation(
+            summary = "Get all registered movies",
+            description = "Get all movies registered in the system",
+            method = "GET"
+    )
     public ResponseEntity<List<MovieResponse>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
