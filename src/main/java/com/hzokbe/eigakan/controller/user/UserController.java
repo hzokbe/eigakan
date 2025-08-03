@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,5 +64,9 @@ public class UserController {
                 .ok()
                 .header(HttpHeaders.SET_COOKIE, expiredCookie.toString())
                 .body("ok");
+    }
+
+    @GetMapping("/is-authenticated")
+    public void isAuthenticated() {
     }
 }
