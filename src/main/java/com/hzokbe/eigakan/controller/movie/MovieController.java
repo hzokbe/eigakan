@@ -54,6 +54,12 @@ public class MovieController {
     }
 
     @GetMapping
+    @Operation(
+            summary = "Retrieve all movies",
+            description = "Returns a paginated list of all movies registered in the system. " +
+                          "Supports pagination through query parameters such as `page`, `size`, and `sort`",
+            method = "GET"
+    )
     public ResponseEntity<PaginatedResponse<MovieResponse>> findAll(Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll(pageable));
     }
