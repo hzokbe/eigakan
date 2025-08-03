@@ -48,4 +48,20 @@ public class UserController {
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body("ok");
     }
+
+    @PostMapping("/sign-out")
+    public ResponseEntity<?> signOut(HttpServletResponse response) {
+        var expiredCookie = ResponseCookie.from("jwt", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.SET_COOKIE, expiredCookie.toString())
+                .body("ok");
+    }
 }
