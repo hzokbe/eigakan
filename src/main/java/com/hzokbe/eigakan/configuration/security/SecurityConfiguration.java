@@ -81,6 +81,8 @@ public class SecurityConfiguration {
                                         .hasRole("ADMINISTRATOR")
                                         .requestMatchers(HttpMethod.GET, "/is-authenticated")
                                         .authenticated()
+                                        .requestMatchers(HttpMethod.POST, "/sign-out")
+                                        .authenticated()
                                         .anyRequest()
                                         .denyAll()
                         )
