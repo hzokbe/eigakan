@@ -64,6 +64,13 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            summary = "Updates movie by id",
+            description = "Updates a specific movie registered in the system. " +
+                          "Receives a body with the updated title and genre of the movie. " +
+                          "Returns the updated movie if the operation is successful",
+            method = "PUT"
+    )
     public ResponseEntity<MovieResponse> update(@PathVariable UUID id, @RequestBody MovieRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id.toString(), request));
     }
