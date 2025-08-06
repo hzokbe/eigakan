@@ -76,6 +76,11 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Delete movie by id",
+            description = "Deletes a specific movie registered in the system. ",
+            method = "DELETE"
+    )
     public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
         service.deleteById(id.toString());
 
