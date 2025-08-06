@@ -65,7 +65,7 @@ public class MovieController {
 
     @PutMapping("/{id}")
     @Operation(
-            summary = "Updates movie by id",
+            summary = "Update movie by id",
             description = "Updates a specific movie registered in the system. " +
                           "Receives a body with the updated title and genre of the movie. " +
                           "Returns the updated movie if the operation is successful",
