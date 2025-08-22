@@ -42,7 +42,7 @@ class MovieServiceTest {
     }
 
     @Test
-    public void shouldThrowInvalidMovieTitleException_whenSavingMovieWithValidTitle() {
+    public void shouldNotThrowInvalidMovieTitleException_whenSavingMovieWithValidTitle() {
         var request = new MovieRequest("foo", Genre.ACTION);
 
         assertDoesNotThrow(() -> service.save(request));
