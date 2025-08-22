@@ -25,4 +25,15 @@ class MovieServiceTest {
 
         assertThrows(InvalidMovieTitleException.class, () -> service.save(request));
     }
+
+    @Test
+    public void shouldThrowInvalidMovieTitleException_whenSavingMovieWithBlankTitle() {
+        var request = new MovieRequest("", Genre.ACTION);
+
+        assertThrows(InvalidMovieTitleException.class, () -> service.save(request));
+
+        request.setTitle(" ");
+
+        assertThrows(InvalidMovieTitleException.class, () -> service.save(request));
+    }
 }
