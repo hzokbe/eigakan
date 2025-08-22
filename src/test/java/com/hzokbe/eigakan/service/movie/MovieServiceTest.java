@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.service.movie;
 
+import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
 import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
 import com.hzokbe.eigakan.model.genre.Genre;
 import com.hzokbe.eigakan.model.movie.request.MovieRequest;
@@ -7,6 +8,7 @@ import com.hzokbe.eigakan.repository.movie.MovieRepository;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,5 +50,14 @@ class MovieServiceTest {
         request.setTitle(" foo ");
 
         assertDoesNotThrow(() -> service.save(request));
+    }
+
+    @Test
+    public void shouldThrowAlreadyRegisteredMovieException_whenMovieAlreadyExists() {
+        var request = new MovieRequest("foo", Genre.ACTION);
+
+        when(repository.existsByTitle("foo")).thenReturn(true);
+
+        assertThrows(AlreadyRegisteredMovieException.class, () -> service.save(request));
     }
 }
