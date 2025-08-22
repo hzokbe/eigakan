@@ -4,6 +4,8 @@ import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
 import com.hzokbe.eigakan.model.genre.Genre;
 import com.hzokbe.eigakan.model.movie.request.MovieRequest;
 import com.hzokbe.eigakan.repository.movie.MovieRepository;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,5 +37,16 @@ class MovieServiceTest {
         request.setTitle(" ");
 
         assertThrows(InvalidMovieTitleException.class, () -> service.save(request));
+    }
+
+    @Test
+    public void shouldThrowInvalidMovieTitleException_whenSavingMovieWithValidTitle() {
+        var request = new MovieRequest("foo", Genre.ACTION);
+
+        assertDoesNotThrow(() -> service.save(request));
+
+        request.setTitle(" foo ");
+
+        assertDoesNotThrow(() -> service.save(request));
     }
 }
