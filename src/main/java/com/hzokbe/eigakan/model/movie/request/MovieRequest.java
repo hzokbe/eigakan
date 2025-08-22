@@ -7,6 +7,15 @@ public class MovieRequest {
 
     private Genre genre;
 
+    public MovieRequest() {
+    }
+
+    public MovieRequest(String title, Genre genre) {
+        this.title = title;
+
+        this.genre = genre;
+    }
+
     public String getTitle() {
         return title;
     }
