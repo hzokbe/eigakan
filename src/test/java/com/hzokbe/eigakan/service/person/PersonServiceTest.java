@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.service.person;
 
+import com.hzokbe.eigakan.exception.person.InvalidPersonLastNameException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonNameException;
 import com.hzokbe.eigakan.model.person.request.PersonRequest;
 import com.hzokbe.eigakan.repository.person.PersonRepository;
@@ -35,5 +36,12 @@ class PersonServiceTest {
         request.setName(" ");
 
         assertThrows(InvalidPersonNameException.class, () -> service.save(request));
+    }
+
+    @Test
+    public void shouldThrowInvalidPersonLastNameException_whenSavingPersonWithNullLastName() {
+        var request = new PersonRequest("foo", null);
+
+        assertThrows(InvalidPersonLastNameException.class, () -> service.save(request));
     }
 }
