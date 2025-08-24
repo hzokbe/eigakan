@@ -5,6 +5,15 @@ public class UserRequest {
 
     private String rawPassword;
 
+    public UserRequest() {
+    }
+
+    public UserRequest(String username, String rawPassword) {
+        this.username = username;
+
+        this.rawPassword = rawPassword;
+    }
+
     public String getUsername() {
         return username;
     }
