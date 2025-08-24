@@ -67,12 +67,16 @@ public class SecurityConfiguration {
                                         .permitAll()
                                         .requestMatchers(HttpMethod.POST, "/sign-in")
                                         .permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/movies/**")
+                                        .authenticated()
                                         .requestMatchers(HttpMethod.GET, "/movies/**")
                                         .authenticated()
                                         .requestMatchers(HttpMethod.PUT, "/movies/**")
                                         .hasRole("ADMINISTRATOR")
                                         .requestMatchers(HttpMethod.DELETE, "/movies/**")
                                         .hasRole("ADMINISTRATOR")
+                                        .requestMatchers(HttpMethod.POST, "/people/**")
+                                        .authenticated()
                                         .requestMatchers(HttpMethod.GET, "/people/**")
                                         .authenticated()
                                         .requestMatchers(HttpMethod.PUT, "/people/**")
@@ -92,9 +96,9 @@ public class SecurityConfiguration {
                                         .anyRequest()
                                         .denyAll()
                         )
-                        .httpBasic(c -> c.authenticationEntryPoint((req, res, ex) -> {
-                            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-                        }))
+                        .httpBasic(c -> c.authenticationEntryPoint(
+                                (req, res, ex) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+                        ))
                         .cors(Customizer.withDefaults())
                         .oauth2ResourceServer(
                                 configurer -> configurer.jwt(
