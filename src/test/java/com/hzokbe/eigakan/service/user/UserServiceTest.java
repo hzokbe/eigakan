@@ -36,4 +36,19 @@ class UserServiceTest {
 
         assertThrows(InvalidUsernameException.class, () -> service.signUp(request));
     }
+
+    @Test
+    public void shouldThrowInvalidUsernameException_whenSavingUserWithInvalidUsername() {
+        var request = new UserRequest("foo!", "bar");
+
+        assertThrows(InvalidUsernameException.class, () -> service.signUp(request));
+
+        request.setUsername("foo@");
+
+        assertThrows(InvalidUsernameException.class, () -> service.signUp(request));
+
+        request.setUsername("foo#");
+
+        assertThrows(InvalidUsernameException.class, () -> service.signUp(request));
+    }
 }
