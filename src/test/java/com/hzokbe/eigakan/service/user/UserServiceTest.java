@@ -1,6 +1,7 @@
 package com.hzokbe.eigakan.service.user;
 
 import com.hzokbe.eigakan.exception.user.AlreadyRegisteredUserException;
+import com.hzokbe.eigakan.exception.user.InvalidPasswordException;
 import com.hzokbe.eigakan.exception.user.InvalidUsernameException;
 import com.hzokbe.eigakan.model.user.request.UserRequest;
 import com.hzokbe.eigakan.repository.user.UserRepository;
@@ -61,5 +62,12 @@ class UserServiceTest {
         when(repository.existsByUsername("foo")).thenReturn(true);
 
         assertThrows(AlreadyRegisteredUserException.class, () -> service.signUp(request));
+    }
+
+    @Test
+    public void shouldThrowInvalidPasswordException_whenSavingUserWithNullRawPassword() {
+        var request = new UserRequest("foo", null);
+
+        assertThrows(InvalidPasswordException.class, () -> service.signUp(request));
     }
 }
