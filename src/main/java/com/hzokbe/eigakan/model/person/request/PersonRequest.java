@@ -5,6 +5,14 @@ public class PersonRequest {
 
     private String lastName;
 
+    public PersonRequest() {}
+
+    public PersonRequest(String name, String lastName) {
+        this.name = name;
+
+        this.lastName = lastName;
+    }
+
     public String getName() {
         return name;
     }
