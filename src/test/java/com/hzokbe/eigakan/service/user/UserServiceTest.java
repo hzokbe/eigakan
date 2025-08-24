@@ -70,4 +70,15 @@ class UserServiceTest {
 
         assertThrows(InvalidPasswordException.class, () -> service.signUp(request));
     }
+
+    @Test
+    public void shouldThrowInvalidPasswordException_whenSavingUserWithBlankRawPassword() {
+        var request = new UserRequest("foo", "");
+
+        assertThrows(InvalidPasswordException.class, () -> service.signUp(request));
+
+        request.setRawPassword(" ");
+
+        assertThrows(InvalidPasswordException.class, () -> service.signUp(request));
+    }
 }
