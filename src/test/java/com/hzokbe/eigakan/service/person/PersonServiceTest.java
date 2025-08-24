@@ -25,4 +25,15 @@ class PersonServiceTest {
 
         assertThrows(InvalidPersonNameException.class, () -> service.save(request));
     }
+
+    @Test
+    public void shouldThrowInvalidPersonNameException_whenSavingPersonWithBlankName() {
+        var request = new PersonRequest("", "bar");
+
+        assertThrows(InvalidPersonNameException.class, () -> service.save(request));
+
+        request.setName(" ");
+
+        assertThrows(InvalidPersonNameException.class, () -> service.save(request));
+    }
 }
