@@ -1,9 +1,5 @@
 package com.hzokbe.eigakan.configuration.security;
 
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.util.stream.Collectors;
-
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -27,6 +23,10 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
@@ -88,11 +88,11 @@ public class SecurityConfiguration {
                                         .requestMatchers(HttpMethod.POST, "/sign-out")
                                         .authenticated()
                                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**")
-                                        .authenticated()
+                                        .permitAll()
                                         .requestMatchers(HttpMethod.GET, "/v3/api-docs/**")
-                                        .authenticated()
+                                        .permitAll()
                                         .requestMatchers(HttpMethod.GET, "/swagger-ui.html")
-                                        .authenticated()
+                                        .permitAll()
                                         .anyRequest()
                                         .denyAll()
                         )

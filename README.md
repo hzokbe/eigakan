@@ -104,3 +104,46 @@ Response example:
     "last": true
 }
 ```
+
+### `GET /movies/{id}`
+
+Response example:
+
+`200 OK`
+
+```json
+{
+    "id": "5a726dfb-4e29-41fe-8c32-04c1b13718bb",
+    "title": "Interestelar",
+    "genre": "SCIENCE_FICTION"
+}
+```
+
+### `PUT /movies/{id}`
+
+Request example:
+
+```json
+{
+    "title": "John Wick",
+    "genre": "ACTION"
+}
+```
+
+Response example:
+
+`200 OK`
+
+```json
+{
+    "id": "5a726dfb-4e29-41fe-8c32-04c1b13718bb",
+    "title": "John Wick",
+    "genre": "ACTION"
+}
+```
+
+### `DELETE /movies/{id}`
+
+Response example:
+
+`201 NO CONTENT`
