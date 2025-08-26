@@ -1,5 +1,1 @@
-.mvn/
-target/
 .env
-.idea/
-src/main/resources/*.key

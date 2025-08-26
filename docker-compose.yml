@@ -1,9 +1,9 @@
 services:
-  eigakan:
+  server:
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile
-    container_name: eigakan
+    container_name: eigakan-server
     depends_on:
       - mongo
     ports:
