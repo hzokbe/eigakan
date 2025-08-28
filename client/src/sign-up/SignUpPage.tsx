@@ -32,12 +32,12 @@ function SignUpPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setShowAlert(true);
-
     if (password != passwordConfirmation) {
       setSeverity("error");
 
       setAlertMessage("invalid password confirmation");
+
+      setShowAlert(true);
 
       setPassword("");
 
@@ -55,6 +55,8 @@ function SignUpPage() {
       setSeverity("success");
 
       setAlertMessage("user created successfully");
+
+      setShowAlert(true);
     } catch (error: unknown) {
       setSeverity("error");
 
@@ -65,6 +67,8 @@ function SignUpPage() {
           setAlertMessage(error.response.data.message ?? "unknown error");
         }
       }
+
+      setShowAlert(true);
     }
 
     setUsername("");
