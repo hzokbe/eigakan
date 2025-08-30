@@ -16,7 +16,8 @@ import { isAuthenticated } from "./services/AuthenticationService";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
 import { useNavigate } from "react-router";
-import { PersonOutlined } from "@mui/icons-material";
+import { ExitToAppOutlined, PersonOutlined } from "@mui/icons-material";
+import { signOut } from "./services/SignOutService";
 
 function App() {
   const [canAccess, setCanAccess] = useState<boolean | null>(null);
@@ -66,6 +67,30 @@ function App() {
     checkCanAccess();
   }, []);
 
+  const onSignOutButtonClick = () => {
+    const tryToSignOut = async () => {
+      try {
+        await signOut();
+
+        navigate("/sign-in");
+      } catch (error: unknown) {
+        setSeverity("error");
+
+        if (error instanceof AxiosError) {
+          if (!error.response) {
+            setAlertMessage("cannot connect to the server");
+          } else {
+            setAlertMessage(error.response.data.message ?? "unknown error");
+          }
+        }
+
+        setShowAlert(true);
+      }
+    };
+
+    tryToSignOut();
+  };
+
   if (canAccess == null) {
     return (
       <Box
@@ -108,6 +133,10 @@ function App() {
 
           <Button color="inherit" onClick={() => navigate("/profile")}>
             <PersonOutlined />
+          </Button>
+
+          <Button color="inherit" onClick={onSignOutButtonClick}>
+            <ExitToAppOutlined />
           </Button>
         </Toolbar>
       </AppBar>
