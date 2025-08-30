@@ -2,16 +2,19 @@ import {
   Alert,
   Box,
   Button,
+  CircularProgress,
   Snackbar,
   TextField,
   Typography,
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { signUp } from "../services/SignUpService";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
+import { useNavigate } from "react-router";
+import { isAuthenticated } from "../services/AuthenticationService";
 
 function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -28,6 +31,10 @@ function SignUpPage() {
     useState<OverridableStringUnion<AlertColor, AlertPropsColorOverrides>>(
       "info"
     );
+
+  const [canAccess, setCanAccess] = useState<boolean | null>(null);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -81,6 +88,66 @@ function SignUpPage() {
   const closeAlert = () => {
     setShowAlert(false);
   };
+
+  useEffect(() => {
+    const checkCanAccess = async () => {
+      try {
+        if (await isAuthenticated()) {
+          setCanAccess(false);
+
+          navigate("/");
+        } else {
+          setCanAccess(true);
+        }
+      } catch (error: unknown) {
+        setSeverity("error");
+
+        if (error instanceof AxiosError) {
+          if (!error.response) {
+            setAlertMessage("cannot connect to the server");
+          } else {
+            setAlertMessage(error.response.data.message ?? "unknown error");
+          }
+        }
+
+        setShowAlert(true);
+      }
+    };
+
+    checkCanAccess();
+  }, []);
+
+  if (canAccess == null) {
+    return (
+      <Box
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
+          minHeight: "100dvh",
+          width: "100vw",
+        }}
+      >
+        <CircularProgress />
+
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={showAlert}
+          autoHideDuration={3000}
+          onClose={closeAlert}
+        >
+          <Alert
+            onClose={closeAlert}
+            severity={severity}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {alertMessage}
+          </Alert>
+        </Snackbar>
+      </Box>
+    );
+  }
 
   return (
     <Box
