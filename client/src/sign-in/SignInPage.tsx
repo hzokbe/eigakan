@@ -52,11 +52,7 @@ function SignInPage() {
     try {
       await signIn(username, password);
 
-      setSeverity("success");
-
-      setAlertMessage("user logged in successfully");
-
-      setShowAlert(true);
+      navigate("/");
     } catch (error: unknown) {
       setSeverity("error");
 
