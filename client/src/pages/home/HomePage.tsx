@@ -9,13 +9,13 @@ import {
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
-import { isAuthenticated } from "./services/AuthenticationService";
+import { isAuthenticated } from "../../services/AuthenticationService";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
 import { useNavigate } from "react-router";
-import NavigationBar from "./components/NavigationBar";
+import NavigationBar from "../../components/NavigationBar";
 
-function App() {
+function HomePage() {
   const [canAccess, setCanAccess] = useState<boolean | null>(null);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -133,4 +133,4 @@ function App() {
   );
 }
 
-export default App;
+export default HomePage;
