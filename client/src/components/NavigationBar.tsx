@@ -1,4 +1,8 @@
-import { ExitToAppOutlined, PersonOutlined } from "@mui/icons-material";
+import {
+  ExitToAppOutlined,
+  MovieOutlined,
+  PersonOutlined,
+} from "@mui/icons-material";
 import {
   AppBar,
   Button,
@@ -64,6 +68,10 @@ function NavigationBar({
         <Typography variant="h6" sx={{ flexGrow: 1, userSelect: "none" }}>
           Eigakan
         </Typography>
+
+        <Button color="inherit" onClick={() => navigate("/movies")}>
+          <MovieOutlined />
+        </Button>
 
         {!isProfileRoute && (
           <Button color="inherit" onClick={() => navigate("/profile")}>
