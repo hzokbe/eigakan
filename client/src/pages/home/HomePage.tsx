@@ -8,7 +8,7 @@ import {
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
-import { isAuthenticated } from "../../services/AuthenticationService";
+import { isAuthenticated } from "../../services/UserService";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
 import { useNavigate } from "react-router";

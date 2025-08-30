@@ -10,11 +10,10 @@ import {
   type AlertPropsColorOverrides,
 } from "@mui/material";
 import { useEffect, useState, type FormEvent } from "react";
-import { signUp } from "../../services/SignUpService";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
 import { useNavigate } from "react-router";
-import { isAuthenticated } from "../../services/AuthenticationService";
+import { isAuthenticated, signUp } from "../../services/UserService";
 
 function SignUpPage() {
   const [username, setUsername] = useState("");

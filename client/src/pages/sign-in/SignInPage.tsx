@@ -12,9 +12,8 @@ import {
 import { useEffect, useState, type FormEvent } from "react";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
-import { signIn } from "../../services/SignInService";
 import { useNavigate } from "react-router";
-import { isAuthenticated } from "../../services/AuthenticationService";
+import { isAuthenticated, signIn } from "../../services/UserService";
 
 function SignInPage() {
   const [username, setUsername] = useState("");
