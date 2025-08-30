@@ -1,38 +1,33 @@
-import "./App.css";
-import { useEffect, useState } from "react";
 import {
   Alert,
-  AppBar,
   Box,
-  Button,
   CircularProgress,
   Snackbar,
-  Toolbar,
   Typography,
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
-import { isAuthenticated } from "./services/AuthenticationService";
-import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { PersonOutlined } from "@mui/icons-material";
+import { isAuthenticated } from "../services/AuthenticationService";
+import { AxiosError } from "axios";
 
-function App() {
+function ProfilePage() {
   const [canAccess, setCanAccess] = useState<boolean | null>(null);
 
   const [showAlert, setShowAlert] = useState(false);
 
   const [alertMessage, setAlertMessage] = useState("");
 
-  const closeAlert = () => {
-    setShowAlert(false);
-  };
-
   const [severity, setSeverity] =
     useState<OverridableStringUnion<AlertColor, AlertPropsColorOverrides>>(
       "info"
     );
+
+  const closeAlert = () => {
+    setShowAlert(false);
+  };
 
   const navigate = useNavigate();
 
@@ -100,18 +95,6 @@ function App() {
 
   return (
     <Box>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1, userSelect: "none" }}>
-            Eigakan
-          </Typography>
-
-          <Button color="inherit" onClick={() => navigate("/profile")}>
-            <PersonOutlined />
-          </Button>
-        </Toolbar>
-      </AppBar>
-
       <Typography
         component="h1"
         sx={{
@@ -120,7 +103,7 @@ function App() {
           userSelect: "none",
         }}
       >
-        Hello, world!
+        Profile
       </Typography>
 
       <Snackbar
@@ -142,4 +125,4 @@ function App() {
   );
 }
 
-export default App;
+export default ProfilePage;
