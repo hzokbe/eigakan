@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { isAuthenticated } from "../../services/AuthenticationService";
 import { AxiosError } from "axios";
+import NavigationBar from "../../components/NavigationBar";
 
 function ProfilePage() {
   const [canAccess, setCanAccess] = useState<boolean | null>(null);
@@ -95,6 +96,12 @@ function ProfilePage() {
 
   return (
     <Box>
+      <NavigationBar
+        setSeverity={setSeverity}
+        setAlertMessage={setAlertMessage}
+        setShowAlert={setShowAlert}
+      />
+
       <Typography
         component="h1"
         sx={{
