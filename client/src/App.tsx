@@ -2,9 +2,11 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import {
   Alert,
+  AppBar,
   Box,
   CircularProgress,
   Snackbar,
+  Toolbar,
   Typography,
   type AlertColor,
   type AlertPropsColorOverrides,
@@ -96,6 +98,14 @@ function App() {
 
   return (
     <Box>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1, userSelect: "none" }}>
+            Eigakan
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
       <Typography
         component="h1"
         sx={{
