@@ -64,4 +64,8 @@ public class UserController {
     @GetMapping("/is-authenticated")
     public void isAuthenticated() {
     }
+
+    @GetMapping("/is-admin")
+    public void isAdmin() {
+    }
 }

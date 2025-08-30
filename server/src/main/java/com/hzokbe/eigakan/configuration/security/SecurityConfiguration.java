@@ -93,6 +93,8 @@ public class SecurityConfiguration {
                                         .permitAll()
                                         .requestMatchers(HttpMethod.GET, "/swagger-ui.html")
                                         .permitAll()
+                                        .requestMatchers(HttpMethod.GET, "/is-admin")
+                                        .hasRole("ADMINISTRATOR")
                                         .anyRequest()
                                         .denyAll()
                         )
