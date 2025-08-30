@@ -2,8 +2,8 @@ import {
   Alert,
   Box,
   CircularProgress,
+  Grid,
   Snackbar,
-  Typography,
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
@@ -13,6 +13,9 @@ import { useNavigate } from "react-router";
 import { isAuthenticated } from "../../services/AuthenticationService";
 import { AxiosError } from "axios";
 import NavigationBar from "../../components/NavigationBar";
+import type { MovieResponse } from "../../types/MovieResponse";
+import { getAllMovies } from "../../services/MovieService";
+import MovieCard from "../../components/MovieCard";
 
 function MoviesPage() {
   const [canAccess, setCanAccess] = useState<boolean | null>(null);
@@ -25,6 +28,8 @@ function MoviesPage() {
     useState<OverridableStringUnion<AlertColor, AlertPropsColorOverrides>>(
       "info"
     );
+
+  const [movies, setMovies] = useState<MovieResponse[] | null>();
 
   const closeAlert = () => {
     setShowAlert(false);
@@ -62,7 +67,31 @@ function MoviesPage() {
     checkCanAccess();
   }, []);
 
-  if (canAccess == null) {
+  useEffect(() => {
+    const updateMovies = async () => {
+      try {
+        setMovies(await getAllMovies());
+      } catch (error: unknown) {
+        setSeverity("error");
+
+        if (error instanceof AxiosError) {
+          if (!error.response) {
+            setAlertMessage("cannot connect to the server");
+          } else if (error.status == 401) {
+            navigate("/sign-in");
+          } else {
+            setAlertMessage(error.response.data.message ?? "unknown error");
+          }
+        }
+
+        setShowAlert(true);
+      }
+    };
+
+    updateMovies();
+  });
+
+  if (canAccess == null || movies == null) {
     return (
       <Box
         sx={{
@@ -102,16 +131,19 @@ function MoviesPage() {
         setShowAlert={setShowAlert}
       />
 
-      <Typography
-        component="h1"
-        sx={{
-          fontSize: "2.5rem",
-          margin: "16px",
-          userSelect: "none",
-        }}
-      >
-        Movies
-      </Typography>
+      <Box sx={{ boxSizing: "border-box", padding: "16px" }}>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}
+        >
+          {movies.map((m: MovieResponse) => (
+            <Grid key={m.id} size={{ xs: 2, sm: 4, md: 4 }}>
+              <MovieCard movie={m} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
 
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}

@@ -1,0 +1,12 @@
+import { server } from "../server/config";
+import type { MovieResponse } from "../types/MovieResponse";
+
+export const getAllMovies = async (): Promise<MovieResponse[]> => {
+  const response = await server.get("/movies/all");
+
+  const movies: MovieResponse[] = [];
+
+  response.data.forEach((m: MovieResponse) => movies.push(m));
+
+  return movies;
+};
