@@ -8,6 +8,7 @@ import SignInPage from "./pages/sign-in/SignInPage.tsx";
 import ProfilePage from "./pages/profile/ProfilePage.tsx";
 import MoviesPage from "./pages/movies/MoviesPage.tsx";
 import NotFoundPage from "./pages/not-found/NotFoundPage.tsx";
+import MoviePage from "./pages/movie/MoviePage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -22,6 +23,8 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/profile" element={<ProfilePage />} />
 
         <Route path="/movies" element={<MoviesPage />} />
+
+        <Route path="/movies/:id" element={<MoviePage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

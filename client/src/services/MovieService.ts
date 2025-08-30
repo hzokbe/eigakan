@@ -10,3 +10,11 @@ export const getAllMovies = async (): Promise<MovieResponse[]> => {
 
   return movies;
 };
+
+export const getMovieById = async (id: string): Promise<MovieResponse> => {
+  const response = await server.get(`/movies/${id}`);
+
+  const data = response.data;
+
+  return { id: data.id, title: data.title, genre: data.genre };
+};
