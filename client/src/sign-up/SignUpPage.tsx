@@ -59,11 +59,7 @@ function SignUpPage() {
         rawPassword: password,
       });
 
-      setSeverity("success");
-
-      setAlertMessage("user created successfully");
-
-      setShowAlert(true);
+      navigate("/");
     } catch (error: unknown) {
       setSeverity("error");
 
