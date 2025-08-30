@@ -89,7 +89,7 @@ function MoviesPage() {
     };
 
     updateMovies();
-  });
+  }, []);
 
   if (canAccess == null || movies == null) {
     return (
