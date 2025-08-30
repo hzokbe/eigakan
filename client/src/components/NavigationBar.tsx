@@ -11,7 +11,7 @@ import {
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
-import { signOut } from "../services/SignOutService";
+import { signOut } from "../services/UserService";
 import { useLocation, useNavigate } from "react-router";
 import type { Dispatch, SetStateAction } from "react";
 import { AxiosError } from "axios";
