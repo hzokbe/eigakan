@@ -7,6 +7,12 @@ export const isAuthenticated = async () => {
   return response.status == 200;
 };
 
+export const isAdmin = async () => {
+  const response = await server.get("/is-admin");
+
+  return response.status == 200;
+};
+
 export const signUp = async (request: SignUpRequest) => {
   await server.post("/sign-up", {
     username: request.username,
