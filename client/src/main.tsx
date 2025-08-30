@@ -3,9 +3,9 @@ import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
 import App from "./App.tsx";
 import { BrowserRouter, Route, Routes } from "react-router";
-import SignUpPage from "./sign-up/SignUpPage.tsx";
-import SignInPage from "./sign-in/SignInPage.tsx";
-import ProfilePage from "./profile/ProfilePage.tsx";
+import SignUpPage from "./pages/sign-up/SignUpPage.tsx";
+import SignInPage from "./pages/sign-in/SignInPage.tsx";
+import ProfilePage from "./pages/profile/ProfilePage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

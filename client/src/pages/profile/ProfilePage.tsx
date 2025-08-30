@@ -10,7 +10,7 @@ import {
 import type { OverridableStringUnion } from "@mui/types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { isAuthenticated } from "../services/AuthenticationService";
+import { isAuthenticated } from "../../services/AuthenticationService";
 import { AxiosError } from "axios";
 
 function ProfilePage() {

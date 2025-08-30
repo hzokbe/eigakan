@@ -10,16 +10,18 @@ import {
   type AlertPropsColorOverrides,
 } from "@mui/material";
 import { useEffect, useState, type FormEvent } from "react";
+import { signUp } from "../../services/SignUpService";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
-import { signIn } from "../services/SignInService";
 import { useNavigate } from "react-router";
-import { isAuthenticated } from "../services/AuthenticationService";
+import { isAuthenticated } from "../../services/AuthenticationService";
 
-function SignInPage() {
+function SignUpPage() {
   const [username, setUsername] = useState("");
 
   const [password, setPassword] = useState("");
+
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -37,20 +39,25 @@ function SignInPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (password == "") {
+    if (password != passwordConfirmation) {
       setSeverity("error");
 
-      setAlertMessage("password cannot be blank");
+      setAlertMessage("invalid password confirmation");
 
       setShowAlert(true);
 
       setPassword("");
 
+      setPasswordConfirmation("");
+
       return;
     }
 
     try {
-      await signIn(username, password);
+      await signUp({
+        username: username,
+        rawPassword: password,
+      });
 
       navigate("/");
     } catch (error: unknown) {
@@ -59,8 +66,6 @@ function SignInPage() {
       if (error instanceof AxiosError) {
         if (!error.response) {
           setAlertMessage("cannot connect to the server");
-        } else if (error.status == 401) {
-          setAlertMessage("invalid credentials");
         } else {
           setAlertMessage(error.response.data.message ?? "unknown error");
         }
@@ -72,6 +77,8 @@ function SignInPage() {
     setUsername("");
 
     setPassword("");
+
+    setPasswordConfirmation("");
   };
 
   const closeAlert = () => {
@@ -94,10 +101,6 @@ function SignInPage() {
         if (error instanceof AxiosError) {
           if (!error.response) {
             setAlertMessage("cannot connect to the server");
-          } else if (error.status == 401) {
-            setCanAccess(false);
-
-            return;
           } else {
             setAlertMessage(error.response.data.message ?? "unknown error");
           }
@@ -160,7 +163,7 @@ function SignInPage() {
           userSelect: "none",
         }}
       >
-        Sign In
+        Sign Up
       </Typography>
       <Box
         component="form"
@@ -192,8 +195,17 @@ function SignInPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <TextField
+          label="Password Confirmation"
+          name="password-confirmation"
+          type="password"
+          fullWidth
+          value={passwordConfirmation}
+          onChange={(e) => setPasswordConfirmation(e.target.value)}
+          required
+        />
         <Button type="submit" variant="contained" color="primary">
-          Sign In
+          Sign Up
         </Button>
       </Box>
 
@@ -216,4 +228,4 @@ function SignInPage() {
   );
 }
 
-export default SignInPage;
+export default SignUpPage;
