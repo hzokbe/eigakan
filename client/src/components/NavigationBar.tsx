@@ -5,6 +5,7 @@ import {
 } from "@mui/icons-material";
 import {
   AppBar,
+  Box,
   Button,
   Toolbar,
   type AlertColor,
@@ -63,22 +64,33 @@ function NavigationBar({
 
   return (
     <AppBar position="static">
-      <Toolbar>
-        <Link to="/">Eigakan</Link>
+      <Toolbar
+        sx={{
+          boxSizing: "border-box",
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <Box>
+          <Link to="/">Eigakan</Link>
+        </Box>
 
-        <Button color="inherit" onClick={() => navigate("/movies")}>
-          <MovieOutlined />
-        </Button>
-
-        {!isProfileRoute && (
-          <Button color="inherit" onClick={() => navigate("/profile")}>
-            <PersonOutlined />
+        <Box>
+          <Button color="inherit" onClick={() => navigate("/movies")}>
+            <MovieOutlined />
           </Button>
-        )}
 
-        <Button color="inherit" onClick={onSignOutButtonClick}>
-          <ExitToAppOutlined />
-        </Button>
+          {!isProfileRoute && (
+            <Button color="inherit" onClick={() => navigate("/profile")}>
+              <PersonOutlined />
+            </Button>
+          )}
+
+          <Button color="inherit" onClick={onSignOutButtonClick}>
+            <ExitToAppOutlined />
+          </Button>
+        </Box>
       </Toolbar>
     </AppBar>
   );
