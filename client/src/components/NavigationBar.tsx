@@ -1,19 +1,19 @@
-import {
-  ExitToAppOutlined,
-  MovieOutlined,
-  PersonOutlined,
-} from "@mui/icons-material";
+import { Logout, MovieOutlined, Settings } from "@mui/icons-material";
 import {
   AppBar,
+  Avatar,
   Box,
   Button,
+  ListItemIcon,
+  Menu,
+  MenuItem,
   Toolbar,
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
 import { signOut } from "../services/UserService";
-import { Link, useLocation, useNavigate } from "react-router";
-import type { Dispatch, SetStateAction } from "react";
+import { Link, useNavigate } from "react-router";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
 
@@ -33,10 +33,6 @@ function NavigationBar({
   setShowAlert,
 }: NavigationBarProps) {
   const navigate = useNavigate();
-
-  const location = useLocation();
-
-  const isProfileRoute = location.pathname.startsWith("/profile");
 
   const onSignOutButtonClick = () => {
     const tryToSignOut = async () => {
@@ -62,6 +58,14 @@ function NavigationBar({
     tryToSignOut();
   };
 
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  const open = Boolean(anchorEl);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar position="static">
       <Toolbar
@@ -81,15 +85,46 @@ function NavigationBar({
             <MovieOutlined />
           </Button>
 
-          {!isProfileRoute && (
-            <Button color="inherit" onClick={() => navigate("/profile")}>
-              <PersonOutlined />
-            </Button>
-          )}
-
-          <Button color="inherit" onClick={onSignOutButtonClick}>
-            <ExitToAppOutlined />
+          <Button
+            color="inherit"
+            onClick={(event) => setAnchorEl(event.currentTarget)}
+          >
+            <Avatar sx={{ width: 24, height: 24 }} />
           </Button>
+
+          <Menu
+            id="account-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+          >
+            <MenuItem
+              onClick={() => {
+                handleClose();
+
+                navigate("/profile");
+              }}
+            >
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              Settings
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                handleClose();
+
+                onSignOutButtonClick();
+              }}
+            >
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </Menu>
         </Box>
       </Toolbar>
     </AppBar>
