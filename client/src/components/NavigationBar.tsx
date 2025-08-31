@@ -7,12 +7,11 @@ import {
   AppBar,
   Button,
   Toolbar,
-  Typography,
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
 import { signOut } from "../services/UserService";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import type { Dispatch, SetStateAction } from "react";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
@@ -65,9 +64,7 @@ function NavigationBar({
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1, userSelect: "none" }}>
-          Eigakan
-        </Typography>
+        <Link to="/">Eigakan</Link>
 
         <Button color="inherit" onClick={() => navigate("/movies")}>
           <MovieOutlined />
