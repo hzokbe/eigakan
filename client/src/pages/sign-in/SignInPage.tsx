@@ -197,6 +197,10 @@ function SignInPage() {
       </Box>
 
       <Typography>
+        Forgot your password? <Link to="/reset-password">Reset password</Link>
+      </Typography>
+
+      <Typography>
         Don't have an account? <Link to="/sign-up">Sign Up</Link>
       </Typography>
 
