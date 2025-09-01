@@ -2,6 +2,7 @@ package com.hzokbe.eigakan.service.user;
 
 import com.hzokbe.eigakan.exception.user.InvalidEmailException;
 import com.hzokbe.eigakan.model.jwt.JwtResponse;
+import com.hzokbe.eigakan.model.user.request.SendRecoverPasswordLinkRequest;
 import com.hzokbe.eigakan.service.jwt.JwtService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,12 +24,16 @@ public class UserService {
 
     private final JwtService jwtService;
 
-    public UserService(UserRepository repository, PasswordEncoder encoder, JwtService jwtService) {
+    private final RecoverPasswordService recoverPasswordService;
+
+    public UserService(UserRepository repository, PasswordEncoder encoder, JwtService jwtService, RecoverPasswordService recoverPasswordService) {
         this.repository = repository;
 
         this.encoder = encoder;
 
         this.jwtService = jwtService;
+
+        this.recoverPasswordService = recoverPasswordService;
     }
 
     public UserResponse signUp(UserRequest request) {
@@ -93,5 +98,25 @@ public class UserService {
 
     public JwtResponse signIn(Authentication authentication) {
         return jwtService.generateJwt(authentication);
+    }
+
+    public void sendRecoverPasswordLink(SendRecoverPasswordLinkRequest request) {
+        var email = request.getEmail();
+
+        if (email == null) {
+            throw new InvalidPasswordException("email cannot be null");
+        }
+
+        if (email.isBlank()) {
+            throw new InvalidPasswordException("email cannot be blank");
+        }
+
+        if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+            throw new InvalidEmailException("invalid email");
+        }
+
+        if (repository.existsByEmail(email)) {
+            recoverPasswordService.sendRecoverPasswordLink(email);
+        }
     }
 }

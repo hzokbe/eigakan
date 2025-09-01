@@ -1,12 +1,10 @@
 package com.hzokbe.eigakan.controller.user;
 
+import com.hzokbe.eigakan.model.user.request.SendRecoverPasswordLinkRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hzokbe.eigakan.model.user.request.UserRequest;
 import com.hzokbe.eigakan.model.user.response.UserResponse;
@@ -67,5 +65,10 @@ public class UserController {
 
     @GetMapping("/is-admin")
     public void isAdmin() {
+    }
+
+    @PostMapping("/send-reset-password-link")
+    public void sendRecoverPasswordLink(@RequestBody SendRecoverPasswordLinkRequest request) {
+        service.sendRecoverPasswordLink(request);
     }
 }
