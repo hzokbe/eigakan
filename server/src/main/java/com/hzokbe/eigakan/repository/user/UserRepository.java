@@ -11,5 +11,7 @@ import com.hzokbe.eigakan.model.user.User;
 public interface UserRepository extends MongoRepository<User, String> {
     boolean existsByUsername(String username);
 
+    boolean existsByEmail(String email);
+
     Optional<User> findByUsername(String username);
 }

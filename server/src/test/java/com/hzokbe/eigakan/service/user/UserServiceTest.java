@@ -24,14 +24,14 @@ class UserServiceTest {
 
     @Test
     public void shouldThrowInvalidUsernameException_whenSavingUserWithNullUsername() {
-        var request = new UserRequest(null, "bar");
+        var request = new UserRequest(null, "foo@bar.com", "bar");
 
         assertThrows(InvalidUsernameException.class, () -> service.signUp(request));
     }
 
     @Test
     public void shouldThrowInvalidUsernameException_whenSavingUserWithBlankUsername() {
-        var request = new UserRequest("", "bar");
+        var request = new UserRequest("", "foo@bar.com", "bar");
 
         assertThrows(InvalidUsernameException.class, () -> service.signUp(request));
 
@@ -42,7 +42,7 @@ class UserServiceTest {
 
     @Test
     public void shouldThrowInvalidUsernameException_whenSavingUserWithInvalidUsername() {
-        var request = new UserRequest("foo!", "bar");
+        var request = new UserRequest("foo!", "foo@bar.com", "bar");
 
         assertThrows(InvalidUsernameException.class, () -> service.signUp(request));
 
@@ -57,7 +57,7 @@ class UserServiceTest {
 
     @Test
     public void shouldThrowAlreadyRegisteredException_whenSavingAlreadyRegisteredUser() {
-        var request = new UserRequest("foo", "bar");
+        var request = new UserRequest("foo", "foo@bar.com", "bar");
 
         when(repository.existsByUsername("foo")).thenReturn(true);
 
@@ -66,14 +66,14 @@ class UserServiceTest {
 
     @Test
     public void shouldThrowInvalidPasswordException_whenSavingUserWithNullRawPassword() {
-        var request = new UserRequest("foo", null);
+        var request = new UserRequest("foo", "foo@bar.com", null);
 
         assertThrows(InvalidPasswordException.class, () -> service.signUp(request));
     }
 
     @Test
     public void shouldThrowInvalidPasswordException_whenSavingUserWithBlankRawPassword() {
-        var request = new UserRequest("foo", "");
+        var request = new UserRequest("foo", "foo@bar.com", "");
 
         assertThrows(InvalidPasswordException.class, () -> service.signUp(request));
 
@@ -84,7 +84,7 @@ class UserServiceTest {
 
     @Test
     public void shouldThrowInvalidPasswordException_whenSavingUserWithInvalidRawPassword() {
-        var request = new UserRequest("foo", "bar");
+        var request = new UserRequest("foo", "foo@bar.com", "bar");
 
         assertThrows(InvalidPasswordException.class, () -> service.signUp(request));
 

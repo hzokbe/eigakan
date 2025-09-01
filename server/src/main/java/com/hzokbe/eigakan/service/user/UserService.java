@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.service.user;
 
+import com.hzokbe.eigakan.exception.user.InvalidEmailException;
 import com.hzokbe.eigakan.model.jwt.JwtResponse;
 import com.hzokbe.eigakan.service.jwt.JwtService;
 import org.springframework.security.core.Authentication;
@@ -51,6 +52,24 @@ public class UserService {
             throw new AlreadyRegisteredUserException("already registered user");
         }
 
+        var email = request.getEmail();
+
+        if (email == null) {
+            throw new InvalidPasswordException("email cannot be null");
+        }
+
+        if (email.isBlank()) {
+            throw new InvalidPasswordException("email cannot be blank");
+        }
+
+        if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+            throw new InvalidEmailException("invalid email");
+        }
+
+        if (repository.existsByEmail(email)) {
+            throw new InvalidEmailException("already registered email");
+        }
+
         var rawPassword = request.getRawPassword();
 
         if (rawPassword == null) {
@@ -65,11 +84,11 @@ public class UserService {
             throw new InvalidPasswordException("password must be at least 8 characters long");
         }
 
-        var user = new User(username, encoder.encode(rawPassword));
+        var user = new User(username, email, encoder.encode(rawPassword));
 
         user = repository.save(user);
 
-        return new UserResponse(user.getId(), username);
+        return new UserResponse(user.getId(), username, email);
     }
 
     public JwtResponse signIn(Authentication authentication) {

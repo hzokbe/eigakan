@@ -5,6 +5,7 @@ import com.hzokbe.eigakan.exception.person.InvalidPersonLastNameException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonNameException;
 import com.hzokbe.eigakan.exception.person.PersonNotFoundException;
 import com.hzokbe.eigakan.exception.user.AlreadyRegisteredUserException;
+import com.hzokbe.eigakan.exception.user.InvalidEmailException;
 import com.hzokbe.eigakan.exception.user.InvalidPasswordException;
 import com.hzokbe.eigakan.exception.user.InvalidUsernameException;
 
@@ -103,6 +104,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse alreadyRegisteredUserExceptionHandler(AlreadyRegisteredUserException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidEmailException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse invalidEmailExceptionHandler(InvalidEmailException exception) {
         return new ExceptionResponse(exception.getMessage());
     }
 }
