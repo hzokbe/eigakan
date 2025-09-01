@@ -12,7 +12,7 @@ import {
 import { useEffect, useState, type FormEvent } from "react";
 import { AxiosError } from "axios";
 import type { OverridableStringUnion } from "@mui/types";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { isAuthenticated, signIn } from "../../services/UserService";
 
 function SignInPage() {
@@ -195,6 +195,10 @@ function SignInPage() {
           Sign In
         </Button>
       </Box>
+
+      <Typography>
+        Don't have an account? <Link to="/sign-up">Sign Up</Link>
+      </Typography>
 
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
