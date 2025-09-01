@@ -17,6 +17,7 @@ export const signUp = async (request: SignUpRequest) => {
   await server.post("/sign-up", {
     username: request.username,
     rawPassword: request.rawPassword,
+    email: request.email,
   });
 };
 
@@ -35,7 +36,11 @@ export const signIn = async (username: string, rawPassword: string) => {
 };
 
 export const sendResetPasswordLink = async (email: string) => {
-  // To do
+  server.post(
+    "/send-reset-password-link",
+    { email: email },
+    { withCredentials: false }
+  );
 };
 
 export const signOut = async () => {

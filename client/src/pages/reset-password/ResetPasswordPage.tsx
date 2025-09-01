@@ -28,7 +28,7 @@ function ResetPasswordPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (email == "") {
+    if (email.trim() == "") {
       setSeverity("error");
 
       setAlertMessage("email cannot be blank");
@@ -41,7 +41,7 @@ function ResetPasswordPage() {
     }
 
     try {
-      sendResetPasswordLink(email);
+      sendResetPasswordLink(email.trim());
 
       setSeverity("success");
 

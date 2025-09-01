@@ -20,6 +20,8 @@ function SignUpPage() {
 
   const [password, setPassword] = useState("");
 
+  const [email, setEmail] = useState("");
+
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const [showAlert, setShowAlert] = useState(false);
@@ -55,6 +57,7 @@ function SignUpPage() {
     try {
       await signUp({
         username: username,
+        email: email,
         rawPassword: password,
       });
 
@@ -76,6 +79,8 @@ function SignUpPage() {
     }
 
     setUsername("");
+
+    setEmail("");
 
     setPassword("");
 
@@ -191,6 +196,17 @@ function SignUpPage() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
+
+        <TextField
+          label="E-mail"
+          name="email"
+          type="email"
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
         <TextField
           label="Password"
           name="password"
@@ -200,6 +216,7 @@ function SignUpPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
         <TextField
           label="Password Confirmation"
           name="password-confirmation"
@@ -209,6 +226,7 @@ function SignUpPage() {
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           required
         />
+
         <Button type="submit" variant="contained" color="primary">
           Sign Up
         </Button>
