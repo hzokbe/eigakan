@@ -65,6 +65,8 @@ function SignUpPage() {
       if (error instanceof AxiosError) {
         if (!error.response) {
           setAlertMessage("cannot connect to the server");
+        } else if (error.status == 401) {
+          setAlertMessage("user already registered");
         } else {
           setAlertMessage(error.response.data.message ?? "unknown error");
         }
