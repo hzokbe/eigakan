@@ -34,6 +34,10 @@ export const signIn = async (username: string, rawPassword: string) => {
   );
 };
 
+export const sendResetPasswordLink = async (email: string) => {
+  // To do
+};
+
 export const signOut = async () => {
   server.post("/sign-out");
 };
