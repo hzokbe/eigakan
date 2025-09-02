@@ -9,7 +9,7 @@ import ProfilePage from "./pages/profile/ProfilePage.tsx";
 import MoviesPage from "./pages/movies/MoviesPage.tsx";
 import NotFoundPage from "./pages/not-found/NotFoundPage.tsx";
 import MoviePage from "./pages/movie/MoviePage.tsx";
-import ResetPasswordPage from "./pages/reset-password/ResetPasswordPage.tsx";
+import SendResetPasswordLinkPage from "./pages/send-reset-password-link/SendResetPasswordLinkPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,7 +21,10 @@ createRoot(document.getElementById("root")!).render(
 
         <Route path="/sign-in" element={<SignInPage />} />
 
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/send-reset-password-link"
+          element={<SendResetPasswordLinkPage />}
+        />
 
         <Route path="/profile" element={<ProfilePage />} />
 

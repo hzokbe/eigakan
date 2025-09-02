@@ -13,7 +13,7 @@ import { AxiosError } from "axios";
 import { useState, type FormEvent } from "react";
 import { sendResetPasswordLink } from "../../services/UserService";
 
-function ResetPasswordPage() {
+function SendResetPasswordLinkPage() {
   const [email, setEmail] = useState("");
 
   const [showAlert, setShowAlert] = useState(false);
@@ -136,4 +136,4 @@ function ResetPasswordPage() {
   );
 }
 
-export default ResetPasswordPage;
+export default SendResetPasswordLinkPage;
