@@ -31,6 +31,8 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ExceptionResponse exceptionHandler(Exception exception) {
+        logger.error(exception.getMessage());
+
         return new ExceptionResponse("internal server error");
     }
 
