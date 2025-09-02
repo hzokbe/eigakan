@@ -89,6 +89,8 @@ public class SecurityConfiguration {
                                         .authenticated()
                                         .requestMatchers(HttpMethod.POST, "/send-reset-password-link")
                                         .permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/reset-password/**")
+                                        .permitAll()
                                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**")
                                         .permitAll()
                                         .requestMatchers(HttpMethod.GET, "/v3/api-docs/**")

@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.controller.user;
 
+import com.hzokbe.eigakan.model.user.request.ResetPasswordRequest;
 import com.hzokbe.eigakan.model.user.request.SendRecoverPasswordLinkRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.*;
@@ -70,5 +71,10 @@ public class UserController {
     @PostMapping("/send-reset-password-link")
     public void sendRecoverPasswordLink(@RequestBody SendRecoverPasswordLinkRequest request) {
         service.sendRecoverPasswordLink(request);
+    }
+
+    @PostMapping("/reset-password/{recoverToken}")
+    public void resetPassword(@PathVariable String recoverToken, @RequestBody ResetPasswordRequest request) {
+        service.resetPassword(recoverToken, request);
     }
 }

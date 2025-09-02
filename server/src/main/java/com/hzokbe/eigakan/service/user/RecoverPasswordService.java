@@ -33,16 +33,28 @@ public class RecoverPasswordService {
 
         message.setSubject("Password recover token");
 
-        message.setText("Recover token: " + generateAndSaveRecoverToken());
+        message.setText("Recover token: " + generateAndSaveRecoverToken(email));
 
         mailSender.send(message);
     }
 
-    public String generateAndSaveRecoverToken() {
+    public String generateAndSaveRecoverToken(String email) {
         var recoverToken = UUID.randomUUID().toString();
 
-        redisTemplate.opsForValue().set("recover", recoverToken, 15, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set("recover::" + recoverToken, email, 15, TimeUnit.MINUTES);
 
         return recoverToken;
+    }
+
+    public boolean isValidRecoverToken(String recoverToken) {
+        return redisTemplate.hasKey("recover::" + recoverToken);
+    }
+
+    public String findEmailByRecoverToken(String recoverToken) {
+        return redisTemplate.opsForValue().get("recover::" + recoverToken);
+    }
+
+    public void deleteRecoverToken(String recoverToken) {
+        redisTemplate.delete("recover::" + recoverToken);
     }
 }

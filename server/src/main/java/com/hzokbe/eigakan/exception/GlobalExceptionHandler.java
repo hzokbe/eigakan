@@ -4,10 +4,7 @@ import com.hzokbe.eigakan.exception.person.AlreadyRegisteredPersonException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonLastNameException;
 import com.hzokbe.eigakan.exception.person.InvalidPersonNameException;
 import com.hzokbe.eigakan.exception.person.PersonNotFoundException;
-import com.hzokbe.eigakan.exception.user.AlreadyRegisteredUserException;
-import com.hzokbe.eigakan.exception.user.InvalidEmailException;
-import com.hzokbe.eigakan.exception.user.InvalidPasswordException;
-import com.hzokbe.eigakan.exception.user.InvalidUsernameException;
+import com.hzokbe.eigakan.exception.user.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,6 +116,20 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse invalidEmailExceptionHandler(InvalidEmailException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse invalidTokenExceptionHandler(InvalidTokenException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(ResetPasswordException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse resetPasswordExceptionHandler(ResetPasswordException exception) {
         return new ExceptionResponse(exception.getMessage());
     }
 }
