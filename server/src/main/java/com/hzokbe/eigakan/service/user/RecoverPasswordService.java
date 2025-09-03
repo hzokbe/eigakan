@@ -36,7 +36,7 @@ public class RecoverPasswordService {
 
         var recoverToken = generateAndSaveRecoverToken(email);
 
-        context.setVariable("frontEndPath", "localhost:8081");
+        context.setVariable("frontEndPath", "http://localhost:8081");
 
         context.setVariable("token", recoverToken);
 
