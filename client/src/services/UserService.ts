@@ -36,19 +36,11 @@ export const signIn = async (username: string, rawPassword: string) => {
 };
 
 export const sendResetPasswordLink = async (email: string) => {
-  server.post(
-    "/send-reset-password-link",
-    { email: email },
-    { withCredentials: false }
-  );
+  server.post("/send-reset-password-link", { email: email });
 };
 
 export const resetPassword = async (password: string, recoverToken: string) => {
-  server.post(
-    `/reset-password/${recoverToken}`,
-    { rawPassword: password },
-    { withCredentials: false }
-  );
+  server.post(`/reset-password/${recoverToken}`, { rawPassword: password });
 };
 
 export const signOut = async () => {
