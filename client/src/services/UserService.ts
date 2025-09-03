@@ -36,13 +36,15 @@ export const signIn = async (username: string, rawPassword: string) => {
 };
 
 export const sendResetPasswordLink = async (email: string) => {
-  server.post("/send-reset-password-link", { email: email });
+  await server.post("/send-reset-password-link", { email: email });
 };
 
 export const resetPassword = async (password: string, recoverToken: string) => {
-  server.post(`/reset-password/${recoverToken}`, { rawPassword: password });
+  await server.post(`/reset-password/${recoverToken}`, {
+    rawPassword: password,
+  });
 };
 
 export const signOut = async () => {
-  server.post("/sign-out");
+  await server.post("/sign-out");
 };
