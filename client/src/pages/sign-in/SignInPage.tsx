@@ -197,7 +197,8 @@ function SignInPage() {
       </Box>
 
       <Typography>
-        Forgot your password? <Link to="/reset-password">Reset password</Link>
+        Forgot your password?{" "}
+        <Link to="/send-reset-password-link">Reset password</Link>
       </Typography>
 
       <Typography>
