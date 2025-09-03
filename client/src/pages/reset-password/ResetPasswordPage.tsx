@@ -59,6 +59,8 @@ function ResetPasswordPage() {
       setAlertMessage("password reseted");
 
       setShowAlert(true);
+
+      setTimeout(() => navigate("/sign-in"), 3500);
     } catch (error: unknown) {
       setSeverity("error");
 
