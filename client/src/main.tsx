@@ -10,6 +10,7 @@ import MoviesPage from "./pages/movies/MoviesPage.tsx";
 import NotFoundPage from "./pages/not-found/NotFoundPage.tsx";
 import MoviePage from "./pages/movie/MoviePage.tsx";
 import SendResetPasswordLinkPage from "./pages/send-reset-password-link/SendResetPasswordLinkPage.tsx";
+import ResetPasswordPage from "./pages/reset-password/ResetPasswordPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -24,6 +25,11 @@ createRoot(document.getElementById("root")!).render(
         <Route
           path="/send-reset-password-link"
           element={<SendResetPasswordLinkPage />}
+        />
+
+        <Route
+          path="/reset-password/:recoverToken"
+          element={<ResetPasswordPage />}
         />
 
         <Route path="/profile" element={<ProfilePage />} />

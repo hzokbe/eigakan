@@ -43,6 +43,14 @@ export const sendResetPasswordLink = async (email: string) => {
   );
 };
 
+export const resetPassword = async (password: string, recoverToken: string) => {
+  server.post(
+    `/reset-password/${recoverToken}`,
+    { rawPassword: password },
+    { withCredentials: false }
+  );
+};
+
 export const signOut = async () => {
   server.post("/sign-out");
 };
