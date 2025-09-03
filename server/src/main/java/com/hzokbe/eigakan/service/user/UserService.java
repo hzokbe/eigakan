@@ -5,6 +5,7 @@ import com.hzokbe.eigakan.model.jwt.JwtResponse;
 import com.hzokbe.eigakan.model.user.request.ResetPasswordRequest;
 import com.hzokbe.eigakan.model.user.request.SendRecoverPasswordLinkRequest;
 import com.hzokbe.eigakan.service.jwt.JwtService;
+import jakarta.mail.MessagingException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -98,7 +99,7 @@ public class UserService {
         return jwtService.generateJwt(authentication);
     }
 
-    public void sendRecoverPasswordLink(SendRecoverPasswordLinkRequest request) {
+    public void sendRecoverPasswordLink(SendRecoverPasswordLinkRequest request) throws MessagingException {
         var email = request.getEmail();
 
         if (email == null) {

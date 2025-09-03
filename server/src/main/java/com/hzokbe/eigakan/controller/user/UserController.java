@@ -2,6 +2,7 @@ package com.hzokbe.eigakan.controller.user;
 
 import com.hzokbe.eigakan.model.user.request.ResetPasswordRequest;
 import com.hzokbe.eigakan.model.user.request.SendRecoverPasswordLinkRequest;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
@@ -69,7 +70,7 @@ public class UserController {
     }
 
     @PostMapping("/send-reset-password-link")
-    public void sendRecoverPasswordLink(@RequestBody SendRecoverPasswordLinkRequest request) {
+    public void sendRecoverPasswordLink(@RequestBody SendRecoverPasswordLinkRequest request) throws MessagingException {
         service.sendRecoverPasswordLink(request);
     }
 

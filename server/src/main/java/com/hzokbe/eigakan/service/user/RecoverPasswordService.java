@@ -1,10 +1,13 @@
 package com.hzokbe.eigakan.service.user;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -18,24 +21,40 @@ public class RecoverPasswordService {
     @Value("${spring.mail.username}")
     private String from;
 
-    public RecoverPasswordService(StringRedisTemplate redisTemplate, JavaMailSender mailSender) {
+    private final TemplateEngine templateEngine;
+
+    public RecoverPasswordService(StringRedisTemplate redisTemplate, JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.redisTemplate = redisTemplate;
 
         this.mailSender = mailSender;
+
+        this.templateEngine = templateEngine;
     }
 
-    public void sendRecoverPasswordLink(String email) {
-        var message = new SimpleMailMessage();
+    public void sendRecoverPasswordLink(String email) throws MessagingException {
+        var context = new Context();
 
-        message.setFrom(from);
+        var recoverToken = generateAndSaveRecoverToken(email);
 
-        message.setTo(email);
+        context.setVariable("frontEndPath", "localhost:8081");
 
-        message.setSubject("Password recover token");
+        context.setVariable("token", recoverToken);
 
-        message.setText("Recover token: " + generateAndSaveRecoverToken(email));
+        var htmlContent = templateEngine.process("reset-password", context);
 
-        mailSender.send(message);
+        var mimeMessage = mailSender.createMimeMessage();
+
+        var mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+        mimeMessageHelper.setFrom(from);
+
+        mimeMessageHelper.setTo(email);
+
+        mimeMessageHelper.setSubject("Password Recovery");
+
+        mimeMessageHelper.setText(htmlContent, true);
+
+        mailSender.send(mimeMessage);
     }
 
     public String generateAndSaveRecoverToken(String email) {
