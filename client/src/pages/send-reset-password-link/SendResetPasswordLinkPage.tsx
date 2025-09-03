@@ -53,9 +53,9 @@ function SendResetPasswordLinkPage() {
 
       if (error instanceof AxiosError) {
         if (!error.response) {
-          setEmail("cannot connect to the server");
+          setAlertMessage("cannot connect to the server");
         } else {
-          setEmail(error.response.data.message ?? "unknown error");
+          setAlertMessage(error.response.data.message ?? "unknown error");
         }
       }
 
