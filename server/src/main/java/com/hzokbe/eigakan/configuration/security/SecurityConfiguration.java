@@ -83,6 +83,8 @@ public class SecurityConfiguration {
                                         .hasRole("ADMINISTRATOR")
                                         .requestMatchers(HttpMethod.DELETE, "/people/**")
                                         .hasRole("ADMINISTRATOR")
+                                        .requestMatchers(HttpMethod.GET, "/users/**")
+                                        .authenticated()
                                         .requestMatchers(HttpMethod.GET, "/is-authenticated")
                                         .authenticated()
                                         .requestMatchers(HttpMethod.POST, "/sign-out")

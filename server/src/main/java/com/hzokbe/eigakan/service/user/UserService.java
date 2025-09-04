@@ -2,11 +2,15 @@ package com.hzokbe.eigakan.service.user;
 
 import com.hzokbe.eigakan.exception.user.*;
 import com.hzokbe.eigakan.model.jwt.JwtResponse;
+import com.hzokbe.eigakan.model.movie.response.MovieResponse;
 import com.hzokbe.eigakan.model.user.request.ResetPasswordRequest;
 import com.hzokbe.eigakan.model.user.request.SendRecoverPasswordLinkRequest;
 import com.hzokbe.eigakan.service.jwt.JwtService;
 import jakarta.mail.MessagingException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,8 @@ import com.hzokbe.eigakan.model.user.response.UserResponse;
 import com.hzokbe.eigakan.repository.user.UserRepository;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -159,5 +165,26 @@ public class UserService {
         repository.save(user);
 
         recoverPasswordService.deleteRecoverToken(recoverToken);
+    }
+
+    @Cacheable(value = "favorite-movies", key = "#id")
+    public List<MovieResponse> findAllFavoriteMovies(String id) {
+        var optionalUser = repository.findById(id);
+
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("user not found");
+        }
+
+        var userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        optionalUser = repository.findByUsername(userDetails.getUsername());
+
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("user not found");
+        }
+
+        return optionalUser.get().getFavoriteMovies().stream().map(
+                m -> new MovieResponse(m.getId(), m.getTitle(), m.getGenre())
+        ).collect(Collectors.toList());
     }
 }

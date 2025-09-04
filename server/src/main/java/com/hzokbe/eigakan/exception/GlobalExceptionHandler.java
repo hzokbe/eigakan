@@ -132,4 +132,11 @@ public class GlobalExceptionHandler {
     public ExceptionResponse resetPasswordExceptionHandler(ResetPasswordException exception) {
         return new ExceptionResponse(exception.getMessage());
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse userNotFoundExceptionHandler(UserNotFoundException exception) {
+        return new ExceptionResponse(exception.getMessage());
+    }
 }
