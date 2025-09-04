@@ -1,4 +1,4 @@
-package com.hzokbe.eigakan.service.user;
+package com.hzokbe.eigakan.service.auth;
 
 import com.hzokbe.eigakan.exception.user.AlreadyRegisteredUserException;
 import com.hzokbe.eigakan.exception.user.InvalidPasswordException;
@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class AuthServiceTest {
     @InjectMocks
-    private UserService service;
+    private AuthService service;
 
     @Mock
     private UserRepository repository;

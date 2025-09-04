@@ -4,7 +4,7 @@ import com.hzokbe.eigakan.model.user.request.ResetPasswordRequest;
 import com.hzokbe.eigakan.model.user.request.SendRecoverPasswordLinkRequest;
 import com.hzokbe.eigakan.model.user.request.UserRequest;
 import com.hzokbe.eigakan.model.user.response.UserResponse;
-import com.hzokbe.eigakan.service.user.UserService;
+import com.hzokbe.eigakan.service.auth.AuthService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +18,9 @@ import java.time.Duration;
 
 @RestController
 public class AuthController {
-    private final UserService service;
+    private final AuthService service;
 
-    public AuthController(UserService service) {
+    public AuthController(AuthService service) {
         this.service = service;
     }
 
