@@ -1,9 +1,11 @@
 package com.hzokbe.eigakan.model.user;
 
+import com.hzokbe.eigakan.model.movie.Movie;
 import com.hzokbe.eigakan.model.role.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 @Document(collection = "users")
@@ -18,6 +20,8 @@ public class User {
     private String passwordHash;
 
     private Role role = Role.USER;
+
+    private HashSet<Movie> favoriteMovies = new HashSet<>();
 
     public User() {
     }
@@ -43,6 +47,20 @@ public class User {
 
         this.role = role;
     }
+    public User(String username, String email, String passwordHash, Role role, HashSet<Movie> favoriteMovies) {
+        this.id = UUID.randomUUID().toString();
+
+        this.username = username;
+
+        this.email = email;
+
+        this.passwordHash = passwordHash;
+
+        this.role = role;
+
+        this.favoriteMovies = favoriteMovies;
+    }
+
 
     public String getId() {
         return id;
@@ -82,5 +100,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public HashSet<Movie> getFavoriteMovies() {
+        return favoriteMovies;
+    }
+
+    public void setFavoriteMovies(HashSet<Movie> favoriteMovies) {
+        this.favoriteMovies = favoriteMovies;
     }
 }

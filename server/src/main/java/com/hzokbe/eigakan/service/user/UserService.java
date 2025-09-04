@@ -15,6 +15,8 @@ import com.hzokbe.eigakan.model.user.request.UserRequest;
 import com.hzokbe.eigakan.model.user.response.UserResponse;
 import com.hzokbe.eigakan.repository.user.UserRepository;
 
+import java.util.HashSet;
+
 @Service
 public class UserService {
     private final UserRepository repository;
@@ -92,7 +94,7 @@ public class UserService {
 
         user = repository.save(user);
 
-        return new UserResponse(user.getId(), username, email);
+        return new UserResponse(user.getId(), username, email, new HashSet<>());
     }
 
     public JwtResponse signIn(Authentication authentication) {
