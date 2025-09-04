@@ -21,7 +21,7 @@ public class JwtService {
     public JwtResponse generateJwt(Authentication authentication) {
         var issuedAt = Instant.now();
 
-        var expiresAt = issuedAt.plusSeconds(3600);
+        var expiresAt = issuedAt.plusSeconds(86400);
 
         var claims = JwtClaimsSet
                 .builder()
