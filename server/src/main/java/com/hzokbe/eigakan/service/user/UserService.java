@@ -167,6 +167,34 @@ public class UserService {
         recoverPasswordService.deleteRecoverToken(recoverToken);
     }
 
+    @Cacheable(value = "users", key = "#id")
+    public UserResponse findById(String id) {
+        var optionalUser = repository.findById(id);
+
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("user not found");
+        }
+
+        var userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        optionalUser = repository.findByUsername(userDetails.getUsername());
+
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("user not found");
+        }
+
+        var user = optionalUser.get();
+
+        return new UserResponse(
+                id,
+                user.getUsername(),
+                user.getEmail(),
+                new HashSet<>(user.getFavoriteMovies().stream().map(
+                        m -> new MovieResponse(m.getId(), m.getTitle(), m.getGenre())
+                ).collect(Collectors.toSet()))
+        );
+    }
+
     @Cacheable(value = "favorite-movies", key = "#id")
     public List<MovieResponse> findAllFavoriteMovies(String id) {
         var optionalUser = repository.findById(id);

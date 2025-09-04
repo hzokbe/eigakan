@@ -1,6 +1,7 @@
 package com.hzokbe.eigakan.controller.user;
 
 import com.hzokbe.eigakan.model.movie.response.MovieResponse;
+import com.hzokbe.eigakan.model.user.response.UserResponse;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,11 @@ public class UserController {
 
     public UserController(UserService service) {
         this.service = service;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> findById(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
     @GetMapping("/{id}/my-list")
