@@ -1,4 +1,9 @@
-import { Logout, MovieOutlined, Settings } from "@mui/icons-material";
+import {
+  FavoriteBorder,
+  Logout,
+  MovieOutlined,
+  Settings,
+} from "@mui/icons-material";
 import {
   AppBar,
   Avatar,
@@ -81,6 +86,10 @@ function NavigationBar({
         </Box>
 
         <Box>
+          <Button color="inherit" onClick={() => navigate("/my-list")}>
+            <FavoriteBorder />
+          </Button>
+
           <Button color="inherit" onClick={() => navigate("/movies")}>
             <MovieOutlined />
           </Button>

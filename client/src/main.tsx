@@ -11,6 +11,7 @@ import NotFoundPage from "./pages/not-found/NotFoundPage.tsx";
 import MoviePage from "./pages/movie/MoviePage.tsx";
 import SendResetPasswordLinkPage from "./pages/send-reset-password-link/SendResetPasswordLinkPage.tsx";
 import ResetPasswordPage from "./pages/reset-password/ResetPasswordPage.tsx";
+import MyListPage from "./pages/my-list/MyListPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -37,6 +38,8 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/movies" element={<MoviesPage />} />
 
         <Route path="/movies/:id" element={<MoviePage />} />
+
+        <Route path="/my-list" element={<MyListPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
