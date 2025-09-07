@@ -3,6 +3,7 @@ package com.hzokbe.eigakan.service.movie;
 import com.hzokbe.eigakan.exception.genre.InvalidGenreException;
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
 import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
+import com.hzokbe.eigakan.exception.movie.MovieNotFoundException;
 import com.hzokbe.eigakan.model.genre.Genre;
 import com.hzokbe.eigakan.model.movie.Movie;
 import com.hzokbe.eigakan.model.movie.request.MovieRequest;
@@ -88,5 +89,14 @@ class MovieServiceTest {
         assertEquals(title, response.getTitle());
 
         assertEquals(genre, response.getGenre());
+    }
+
+    @Test
+    public void shouldThrowMovieNotFoundException_whenTryToFindMovieWithInvalidId() {
+        var id = UUID.randomUUID().toString();
+
+        when(repository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(MovieNotFoundException.class, () -> service.findById(id));
     }
 }
