@@ -1,5 +1,6 @@
 package com.hzokbe.eigakan.service.movie;
 
+import com.hzokbe.eigakan.exception.genre.InvalidGenreException;
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
 import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
 import com.hzokbe.eigakan.model.genre.Genre;
@@ -61,5 +62,12 @@ class MovieServiceTest {
         when(repository.existsByTitle("foo")).thenReturn(true);
 
         assertThrows(AlreadyRegisteredMovieException.class, () -> service.save(request));
+    }
+
+    @Test
+    public void shouldThrowInvalidGenreException_whenSavingMovieWithNullGenre() {
+        var request = new MovieRequest("foo", null);
+
+        assertThrows(InvalidGenreException.class, () -> service.save(request));
     }
 }
