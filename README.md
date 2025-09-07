@@ -30,9 +30,9 @@ These variables will be used by `Docker Compose` to initialize the services with
 To configure and start the application, run:
 
 ```bash
-openssl genrsa > src/main/resources/private.key
+openssl genrsa > server/src/main/resources/private.key
 
-openssl rsa -in src/main/resources/private.key -pubout -out src/main/resources/public.key
+openssl rsa -in server/src/main/resources/private.key -pubout -out server/src/main/resources/public.key
 
 docker compose up -d
 ```
