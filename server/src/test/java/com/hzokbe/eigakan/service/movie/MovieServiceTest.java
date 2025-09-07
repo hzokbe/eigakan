@@ -12,8 +12,9 @@ import com.hzokbe.eigakan.repository.movie.MovieRepository;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -98,5 +99,32 @@ class MovieServiceTest {
         when(repository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(MovieNotFoundException.class, () -> service.findById(id));
+    }
+
+    @Test
+    public void shouldUpdateMovie() {
+        var id = UUID.randomUUID().toString();
+
+        var title = "foo";
+
+        var genre = Genre.ACTION;
+
+        var movie = new Movie(id, title, genre);
+
+        when(repository.findById(id)).thenReturn(Optional.of(movie));
+
+        var newTitle = "bar";
+
+        var newGenre = Genre.ADVENTURE;
+
+        var updatedMovie = new Movie(id, newTitle, newGenre);
+
+        doReturn(updatedMovie).when(repository).save(any(Movie.class));
+
+        var response = service.update(id, new MovieRequest(newTitle, newGenre));
+
+        assertEquals(newTitle, response.getTitle());
+
+        assertEquals(newGenre, response.getGenre());
     }
 }
