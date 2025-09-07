@@ -19,6 +19,14 @@ public class Movie {
     public Movie() {
     }
 
+    public Movie(String id, String title, Genre genre) {
+        this.id = id;
+
+        this.title = title;
+
+        this.genre = genre;
+    }
+
     public Movie(String title, Genre genre) {
         this.id = UUID.randomUUID().toString();
 

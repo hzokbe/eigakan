@@ -3,17 +3,21 @@ package com.hzokbe.eigakan.service.movie;
 import com.hzokbe.eigakan.exception.movie.AlreadyRegisteredMovieException;
 import com.hzokbe.eigakan.exception.movie.InvalidMovieTitleException;
 import com.hzokbe.eigakan.model.genre.Genre;
+import com.hzokbe.eigakan.model.movie.Movie;
 import com.hzokbe.eigakan.model.movie.request.MovieRequest;
 import com.hzokbe.eigakan.repository.movie.MovieRepository;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 class MovieServiceTest {
@@ -22,6 +26,15 @@ class MovieServiceTest {
 
     @Mock
     private MovieRepository repository;
+
+    @Test
+    public void shouldSaveMovie() {
+        var movie = new Movie(UUID.randomUUID().toString(), "foo", Genre.ACTION);
+
+        when(repository.save(any(Movie.class))).thenReturn(movie);
+
+        assertDoesNotThrow(() -> service.save(new MovieRequest(movie.getTitle(), movie.getGenre())));
+    }
 
     @Test
     public void shouldThrowInvalidMovieTitleException_whenSavingMovieWithNullTitle() {
