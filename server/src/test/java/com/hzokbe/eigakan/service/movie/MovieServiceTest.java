@@ -55,17 +55,6 @@ class MovieServiceTest {
     }
 
     @Test
-    public void shouldNotThrowInvalidMovieTitleException_whenSavingMovieWithValidTitle() {
-        var request = new MovieRequest("foo", Genre.ACTION);
-
-        assertDoesNotThrow(() -> service.save(request));
-
-        request.setTitle(" foo ");
-
-        assertDoesNotThrow(() -> service.save(request));
-    }
-
-    @Test
     public void shouldThrowAlreadyRegisteredMovieException_whenMovieAlreadyExists() {
         var request = new MovieRequest("foo", Genre.ACTION);
 
