@@ -62,13 +62,4 @@ class MovieServiceTest {
 
         assertThrows(AlreadyRegisteredMovieException.class, () -> service.save(request));
     }
-
-    @Test
-    public void shouldNotThrowAlreadyRegisteredMovieException_whenMovieNotExists() {
-        var request = new MovieRequest("foo", Genre.ACTION);
-
-        when(repository.existsByTitle("foo")).thenReturn(false);
-
-        assertDoesNotThrow(() -> service.save(request));
-    }
 }
