@@ -17,12 +17,14 @@ This project is a REST API that allows you to add, retrieve, update, and delete 
 
 ## How to Run
 
-Create a file named `.env` in the root directory of the project and define the following environment variables to configure `MongoDB` access:
+Create a file named `.env` in the root directory of the project and define the following environment variables:
 
 ```
 MONGO_DB=eigakan
 MONGO_USER=hzokbe
 MONGO_PASSWORD=hzokbe
+MAIL_USERNAME=ayumu_kasuga@azumanga.jp 
+MAIL_PASSWORD=xk93pjfd8qlam2nv
 ```
 
 These variables will be used by `Docker Compose` to initialize the services with the correct credentials.
