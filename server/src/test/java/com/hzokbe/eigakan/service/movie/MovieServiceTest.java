@@ -144,4 +144,15 @@ class MovieServiceTest {
 
         assertThrows(InvalidMovieTitleException.class, () -> service.update(id, request));
     }
+
+    @Test
+    public void shouldThrowsAlreadyRegisteredMovieException_whenMovieTitleIsAlreadyInUse() {
+        var id = UUID.randomUUID().toString();
+
+        doReturn(true).when(repository).existsByTitle("foo");
+
+        var request = new MovieRequest("foo", Genre.ACTION);
+
+        assertThrows(AlreadyRegisteredMovieException.class, () -> service.update(id, request));
+    }
 }
