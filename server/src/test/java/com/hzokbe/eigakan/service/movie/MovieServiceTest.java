@@ -155,4 +155,13 @@ class MovieServiceTest {
 
         assertThrows(AlreadyRegisteredMovieException.class, () -> service.update(id, request));
     }
+
+    @Test
+    public void shouldThrowsInvalidGenreException_whenUpdateMovieWithNullGenre() {
+        var id = UUID.randomUUID().toString();
+
+        var request = new MovieRequest("foo", null);
+
+        assertThrows(InvalidGenreException.class, () -> service.update(id, request));
+    }
 }
