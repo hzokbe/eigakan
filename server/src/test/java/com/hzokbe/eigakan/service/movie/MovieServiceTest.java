@@ -164,4 +164,17 @@ class MovieServiceTest {
 
         assertThrows(InvalidGenreException.class, () -> service.update(id, request));
     }
+
+    @Test
+    public void shouldThrowsMovieNotFoundException_whenUpdateMovieWithInvalidId() {
+        var id = UUID.randomUUID().toString();
+
+        doReturn(false).when(repository).existsByTitle("foo");
+
+        doReturn(Optional.empty()).when(repository).findById(id);
+
+        var request = new MovieRequest("foo", Genre.ACTION);
+
+        assertThrows(MovieNotFoundException.class, () -> service.update(id, request));
+    }
 }
