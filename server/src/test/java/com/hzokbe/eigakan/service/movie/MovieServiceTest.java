@@ -146,7 +146,7 @@ class MovieServiceTest {
     }
 
     @Test
-    public void shouldThrowsAlreadyRegisteredMovieException_whenMovieTitleIsAlreadyInUse() {
+    public void shouldThrowsAlreadyRegisteredMovieException_whenUpdateMovieTitleIsAlreadyInUse() {
         var id = UUID.randomUUID().toString();
 
         doReturn(true).when(repository).existsByTitle("foo");
