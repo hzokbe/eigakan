@@ -135,4 +135,13 @@ class MovieServiceTest {
 
         assertThrows(InvalidMovieTitleException.class, () -> service.update(id, request));
     }
+
+    @Test
+    public void shouldThrowsInvalidMovieTitleException_whenUpdateMovieWithBlankTitle() {
+        var id = UUID.randomUUID().toString();
+
+        var request = new MovieRequest("", Genre.ACTION);
+
+        assertThrows(InvalidMovieTitleException.class, () -> service.update(id, request));
+    }
 }
