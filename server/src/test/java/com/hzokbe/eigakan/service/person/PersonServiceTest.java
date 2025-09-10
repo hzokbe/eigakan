@@ -16,8 +16,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.UUID;
-
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
     @InjectMocks
