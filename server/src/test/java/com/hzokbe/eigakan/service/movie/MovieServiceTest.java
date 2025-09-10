@@ -126,4 +126,13 @@ class MovieServiceTest {
 
         assertEquals(newGenre, response.getGenre());
     }
+
+    @Test
+    public void shouldThrowsInvalidMovieTitleException_whenUpdateMovieWithNullTitle() {
+        var id = UUID.randomUUID().toString();
+
+        var request = new MovieRequest(null, Genre.ACTION);
+
+        assertThrows(InvalidMovieTitleException.class, () -> service.update(id, request));
+    }
 }
