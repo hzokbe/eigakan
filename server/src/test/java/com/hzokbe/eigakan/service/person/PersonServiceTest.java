@@ -44,4 +44,11 @@ class PersonServiceTest {
 
         assertThrows(InvalidPersonLastNameException.class, () -> service.save(request));
     }
+
+    @Test
+    public void shouldThrowInvalidPersonLastNameException_whenSavingPersonWithBlankLastName() {
+        var request = new PersonRequest("foo", "");
+
+        assertThrows(InvalidPersonLastNameException.class, () -> service.save(request));
+    }
 }
