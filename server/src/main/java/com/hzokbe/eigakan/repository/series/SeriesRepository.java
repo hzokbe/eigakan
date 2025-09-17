@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SeriesRepository extends MongoRepository<Series, String> {
+    boolean existsByTitle(String title);
 }
