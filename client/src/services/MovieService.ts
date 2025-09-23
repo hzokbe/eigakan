@@ -1,5 +1,29 @@
 import { server } from "../server/config";
-import type { MovieResponse } from "../types/MovieResponse";
+import type {
+  MovieResponse,
+  PaginatedMovieResponse,
+} from "../types/MovieResponse";
+
+export const getMovies = async (
+  page: number,
+  size: number
+): Promise<PaginatedMovieResponse> => {
+  const response = await server.get(`/movies?page=${page}&size=${size}`);
+
+  const data = response.data;
+
+  const content: MovieResponse[] = [];
+
+  data.content.forEach((m: MovieResponse) => content.push(m));
+
+  return {
+    content: content,
+    totalPages: data.totalPages,
+    totalElements: data.totalElements,
+    size: data.size,
+    number: data.number,
+  };
+};
 
 export const getAllMovies = async (): Promise<MovieResponse[]> => {
   const response = await server.get("/movies/all");

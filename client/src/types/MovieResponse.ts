@@ -20,6 +20,22 @@ export type Genre =
   | "WAR"
   | "SPORT";
 
+export type PaginatedMovieResponse = {
+  content: MovieResponse[];
+
+  totalPages: number;
+
+  number: number;
+
+  size: number;
+
+  totalElements: number;
+
+  first?: boolean;
+
+  last?: boolean;
+};
+
 export type MovieResponse = {
   id: string;
 

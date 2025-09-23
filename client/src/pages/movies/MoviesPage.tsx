@@ -2,8 +2,9 @@ import {
   Alert,
   Box,
   CircularProgress,
-  Grid,
+  Pagination,
   Snackbar,
+  Stack,
   type AlertColor,
   type AlertPropsColorOverrides,
 } from "@mui/material";
@@ -14,7 +15,7 @@ import { isAuthenticated } from "../../services/UserService";
 import { AxiosError } from "axios";
 import NavigationBar from "../../components/NavigationBar";
 import type { MovieResponse } from "../../types/MovieResponse";
-import { getAllMovies } from "../../services/MovieService";
+import { getMovies } from "../../services/MovieService";
 import MovieCard from "../../components/MovieCard";
 
 function MoviesPage() {
@@ -36,6 +37,10 @@ function MoviesPage() {
   };
 
   const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const [totalPages, setTotalPages] = useState<number | null>(null);
 
   useEffect(() => {
     const checkCanAccess = async () => {
@@ -70,7 +75,13 @@ function MoviesPage() {
   useEffect(() => {
     const updateMovies = async () => {
       try {
-        setMovies(await getAllMovies());
+        const response = await getMovies(currentPage - 1, 10);
+
+        setMovies(response.content);
+
+        setCurrentPage(response.number + 1);
+
+        setTotalPages(response.totalPages);
       } catch (error: unknown) {
         setSeverity("error");
 
@@ -89,9 +100,9 @@ function MoviesPage() {
     };
 
     updateMovies();
-  }, []);
+  }, [currentPage]);
 
-  if (canAccess == null || movies == null) {
+  if (canAccess == null || movies == null || totalPages == null) {
     return (
       <Box
         sx={{
@@ -131,18 +142,33 @@ function MoviesPage() {
         setShowAlert={setShowAlert}
       />
 
-      <Box sx={{ boxSizing: "border-box", padding: "16px" }}>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
+      <Box
+        sx={{
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+          padding: "16px",
+          minHeight: "100dvh",
+        }}
+      >
+        <Stack sx={{ display: "flex", gap: "8px" }}>
           {movies.map((m: MovieResponse) => (
-            <Grid key={m.id} size={{ xs: 2, sm: 4, md: 4 }}>
-              <MovieCard movie={m} />
-            </Grid>
+            <MovieCard movie={m} />
           ))}
-        </Grid>
+        </Stack>
+
+        {totalPages != 0 ? (
+          <Pagination
+            sx={{ width: "100%" }}
+            page={currentPage}
+            count={totalPages}
+            onChange={(_, page) => setCurrentPage(page)}
+            shape="rounded"
+          />
+        ) : (
+          <></>
+        )}
       </Box>
 
       <Snackbar
