@@ -23,6 +23,8 @@ public class User {
 
     private HashSet<Movie> favoriteMovies = new HashSet<>();
 
+    private boolean isActivated = false;
+
     public User() {
     }
 
@@ -47,6 +49,7 @@ public class User {
 
         this.role = role;
     }
+
     public User(String username, String email, String passwordHash, Role role, HashSet<Movie> favoriteMovies) {
         this.id = UUID.randomUUID().toString();
 
@@ -108,5 +111,13 @@ public class User {
 
     public void setFavoriteMovies(HashSet<Movie> favoriteMovies) {
         this.favoriteMovies = favoriteMovies;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
     }
 }

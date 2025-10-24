@@ -80,4 +80,9 @@ public class AuthController {
     public void resetPassword(@PathVariable String recoverToken, @RequestBody ResetPasswordRequest request) {
         service.resetPassword(recoverToken, request);
     }
+
+    @PostMapping("/account-activation/{activationToken}")
+    public void activateAccount(@PathVariable String activationToken) {
+        service.activateAccount(activationToken);
+    }
 }

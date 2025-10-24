@@ -9,6 +9,7 @@ import com.hzokbe.eigakan.model.user.request.UserRequest;
 import com.hzokbe.eigakan.model.user.response.UserResponse;
 import com.hzokbe.eigakan.repository.user.UserRepository;
 import com.hzokbe.eigakan.service.jwt.JwtService;
+import com.hzokbe.eigakan.service.user.AccountActivationService;
 import com.hzokbe.eigakan.service.user.RecoverPasswordService;
 import jakarta.mail.MessagingException;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,9 @@ public class AuthService {
 
     private final RecoverPasswordService recoverPasswordService;
 
-    public AuthService(UserRepository repository, PasswordEncoder encoder, JwtService jwtService, RecoverPasswordService recoverPasswordService) {
+    private final AccountActivationService accountActivationService;
+
+    public AuthService(UserRepository repository, PasswordEncoder encoder, JwtService jwtService, RecoverPasswordService recoverPasswordService, AccountActivationService accountActivationService) {
         this.repository = repository;
 
         this.encoder = encoder;
@@ -35,6 +38,8 @@ public class AuthService {
         this.jwtService = jwtService;
 
         this.recoverPasswordService = recoverPasswordService;
+
+        this.accountActivationService = accountActivationService;
     }
 
     public UserResponse signUp(UserRequest request) {
@@ -159,5 +164,31 @@ public class AuthService {
         repository.save(user);
 
         recoverPasswordService.deleteRecoverToken(recoverToken);
+    }
+
+    public void activateAccount(String activationToken) {
+        if (!accountActivationService.isValidActivationToken(activationToken)) {
+            throw new InvalidTokenException("invalid or expired token");
+        }
+
+        var email = accountActivationService.findEmailByActivationToken(activationToken);
+
+        var optionalUser = repository.findByEmail(email);
+
+        if (optionalUser.isEmpty()) {
+            throw new AccountActivationException("unable to activate account");
+        }
+
+        var user = optionalUser.get();
+
+        if (user.isActivated()) {
+            return;
+        }
+
+        user.setActivated(true);
+
+        repository.save(user);
+
+        accountActivationService.deleteActivationToken(activationToken);
     }
 }
