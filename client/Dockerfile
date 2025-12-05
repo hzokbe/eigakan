@@ -1,21 +1,33 @@
-FROM node:21-alpine AS build
+FROM node:21-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+RUN npm install -g pnpm
 
-RUN npm install
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm install
 
 COPY . .
 
-RUN npm run build
+RUN pnpm build
 
-FROM nginx:alpine
+FROM node:21-alpine AS runner
 
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN npm install -g pnpm
 
-EXPOSE 80
+COPY package.json pnpm-lock.yaml ./
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN pnpm install --prod
+
+COPY --from=builder /app/.next ./.next
+
+COPY --from=builder /app/public ./public
+
+COPY --from=builder /app/node_modules ./node_modules
+
+EXPOSE 3000
+
+CMD ["pnpm", "start"]
