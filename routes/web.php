@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('animes', AnimeController::class)->only(['index']);
+Route::resource('animes', AnimeController::class)->only(['index', 'show']);

@@ -11,9 +11,13 @@ class Anime extends Model
 {
     use HasUuids;
 
+    public $incrementing = false;
+
     protected $casts = [
         'aired_from' => 'date',
         'aired_to' => 'date',
         'score' => 'decimal:2'
     ];
+
+    protected $keyType = 'string';
 }
