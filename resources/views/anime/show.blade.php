@@ -28,9 +28,9 @@
             </section>
             <p class="text-neutral-50 text-sm">
                 Aired:
-                {{ sprintf('%s %d, %d', $anime->aired_from->translatedFormat('F'), $anime->aired_from->day, $anime->aired_from->year) }}
+                {{ $anime->aired_from?->translatedFormat('F d, Y') ?? 'Unknown' }}
                 to
-                {{ sprintf('%s %d, %d', $anime->aired_to->translatedFormat('F'), $anime->aired_to->day, $anime->aired_from->year) }}
+                {{ $anime->aired_from?->translatedFormat('F d, Y') ?? 'Unknown' }}
             </p>
             <p class="text-neutral-50 text-sm">{{$anime->status}}</p>
         </section>

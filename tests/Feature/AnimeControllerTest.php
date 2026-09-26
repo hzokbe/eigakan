@@ -1,6 +1,7 @@
 <?php
 
 use Database\Factories\AnimeFactory;
+use Illuminate\Support\Str;
 
 test('list all animes without query', function () {
     $animes = AnimeFactory::new()
@@ -81,11 +82,13 @@ test('list animes ordered by title descending', function () {
 });
 
 test('list animes ordered by score', function () {
-    AnimeFactory::new()->count(3)->sequence(
-        ['title' => 'Low', 'score' => 5.0],
-        ['title' => 'High', 'score' => 9.5],
-        ['title' => 'Mid', 'score' => 7.0],
-    )->create();
+    AnimeFactory::new()
+        ->count(3)
+        ->sequence(
+            ['title' => 'Low', 'score' => 5.0],
+            ['title' => 'High', 'score' => 9.5],
+            ['title' => 'Mid', 'score' => 7.0],
+        )->create();
 
     $response = $this->get('/animes?sort=score&direction=desc');
 
@@ -100,11 +103,13 @@ test('list animes ordered by score', function () {
 });
 
 test('list animes ordered by aired_from', function () {
-    AnimeFactory::new()->count(3)->sequence(
-        ['title' => 'Newest', 'aired_from' => now()->subYear()],
-        ['title' => 'Oldest', 'aired_from' => now()->subYears(10)],
-        ['title' => 'Middle', 'aired_from' => now()->subYears(5)],
-    )->create();
+    AnimeFactory::new()
+        ->count(3)
+        ->sequence(
+            ['title' => 'Newest', 'aired_from' => now()->subYear()],
+            ['title' => 'Oldest', 'aired_from' => now()->subYears(10)],
+            ['title' => 'Middle', 'aired_from' => now()->subYears(5)],
+        )->create();
 
     $response = $this->get('/animes?sort=aired_from&direction=asc');
 
@@ -119,11 +124,13 @@ test('list animes ordered by aired_from', function () {
 });
 
 test('falls back to score desc when sort field is not allowed', function () {
-    AnimeFactory::new()->count(3)->sequence(
-        ['title' => 'Low', 'score' => 5.0],
-        ['title' => 'High', 'score' => 9.5],
-        ['title' => 'Mid', 'score' => 7.0],
-    )->create();
+    AnimeFactory::new()
+        ->count(3)
+        ->sequence(
+            ['title' => 'Low', 'score' => 5.0],
+            ['title' => 'High', 'score' => 9.5],
+            ['title' => 'Mid', 'score' => 7.0],
+        )->create();
 
     $response = $this->get('/animes?sort=invalid_column');
 
@@ -138,11 +145,13 @@ test('falls back to score desc when sort field is not allowed', function () {
 });
 
 test('falls back to desc when direction is invalid', function () {
-    AnimeFactory::new()->count(3)->sequence(
-        ['title' => 'Low', 'score' => 5.0],
-        ['title' => 'High', 'score' => 9.5],
-        ['title' => 'Mid', 'score' => 7.0],
-    )->create();
+    AnimeFactory::new()
+        ->count(3)
+        ->sequence(
+            ['title' => 'Low', 'score' => 5.0],
+            ['title' => 'High', 'score' => 9.5],
+            ['title' => 'Mid', 'score' => 7.0],
+        )->create();
 
     $response = $this->get('/animes?sort=score&direction=invalid');
 
@@ -173,4 +182,20 @@ test('defaults to score desc when no sort params are given', function () {
                     'Low',
                 ];
         });
+});
+
+test('show anime details', function () {
+    $id = (string)Str::uuid();
+
+    AnimeFactory::new()
+        ->count(1)
+        ->sequence(
+            ['id' => $id],
+        )->create();
+
+    $response = $this->get('/animes/' . $id);
+
+    $response->assertViewIs('anime.show')->assertViewHas('anime', function ($anime) use ($id) {
+        return $anime->id === $id;
+    });
 });
