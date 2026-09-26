@@ -6,15 +6,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class FilterPanel extends Component
+class SearchBar extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public $sort = 'score',
-        public $direction = 'desc'
-    )
+    public function __construct()
     {
     }
 
@@ -23,6 +20,6 @@ class FilterPanel extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.filter-panel');
+        return view('components.search-bar');
     }
 }

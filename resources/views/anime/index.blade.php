@@ -2,7 +2,7 @@
 
 @section('content')
     <main class="box-border flex flex-col gap-2 p-4">
-        <x-filter-panel :sort="request('sort', 'score')" :direction="request('direction', 'desc')"/>
+        <x-search-bar/>
         @foreach($animes as $anime)
             <x-anime-card :anime="$anime"/>
         @endforeach

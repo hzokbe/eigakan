@@ -27,9 +27,15 @@ class AnimeController extends Controller
             $direction = 'desc';
         }
 
-        $animes = Anime::query()
-            ->orderBy($sort, $direction)
-            ->get();
+        $query = Anime::query();
+
+        if ($request->input('query', '') != '') {
+            $query->where('title', 'like', '%' . $request->input('query') . '%');
+        }
+
+        $query->orderBy($sort, $direction);
+
+        $animes = $query->get();
 
         return view('anime.index')
             ->with('animes', $animes);

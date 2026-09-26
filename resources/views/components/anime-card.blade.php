@@ -20,9 +20,11 @@
             <div>
                 <p class="text-neutral-50">Score: {{$anime->score}}</p>
             </div>
-            <div>
-                <p class="text-neutral-50">Episodes: {{$anime->episodes}}</p>
-            </div>
+            @unless($anime->type == 'Movie')
+                <div>
+                    <p class="text-neutral-50">Episodes: {{$anime->episodes}}</p>
+                </div>
+            @endunless
         </div>
     </div>
 </div>
