@@ -40,4 +40,10 @@ class AnimeController extends Controller
         return view('anime.index')
             ->with('animes', $animes);
     }
+
+    public function show(Anime $anime)
+    {
+        return view('anime.show')
+            ->with('anime', $anime);
+    }
 }
