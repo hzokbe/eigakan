@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[Fillable(['title', 'japanese_title', 'synopsis', 'type', 'episodes', 'status', 'aired_from', 'aired_to', 'score', 'image_source'])]
 class Anime extends Model
@@ -20,4 +21,9 @@ class Anime extends Model
     ];
 
     protected $keyType = 'string';
+
+    public function genres(): BelongsToMany
+    {
+        return $this->belongsToMany(Genre::class);
+    }
 }
