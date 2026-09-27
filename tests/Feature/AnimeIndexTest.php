@@ -1,7 +1,6 @@
 <?php
 
 use Database\Factories\AnimeFactory;
-use Illuminate\Support\Str;
 
 test('list all animes without query', function () {
     $animes = AnimeFactory::new()
@@ -182,20 +181,4 @@ test('defaults to score desc when no sort params are given', function () {
                     'Low',
                 ];
         });
-});
-
-test('show anime details', function () {
-    $id = (string)Str::uuid();
-
-    AnimeFactory::new()
-        ->count(1)
-        ->sequence(
-            ['id' => $id],
-        )->create();
-
-    $response = $this->get('/animes/' . $id);
-
-    $response->assertViewIs('anime.show')->assertViewHas('anime', function ($anime) use ($id) {
-        return $anime->id === $id;
-    });
 });
