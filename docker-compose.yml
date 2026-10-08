@@ -1,0 +1,24 @@
+services:
+  eigakan-db:
+    container_name: eigakan-db
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-eigakan}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-eigakan}
+      POSTGRES_DB: ${DB_DATABASE:-eigakan}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-eigakan}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    image: postgres:18-alpine
+    networks:
+      - eigakan
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - eigakan-db:/var/lib/postgresql
+networks:
+  eigakan:
+    name: eigakan
+volumes:
+  eigakan-db:
