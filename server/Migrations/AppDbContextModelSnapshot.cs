@@ -8,46 +8,65 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Eigakan.Migrations;
-
-[DbContext(typeof(AppDbContext))]
-partial class AppDbContextModelSnapshot : ModelSnapshot
+namespace Eigakan.Migrations
 {
-    protected override void BuildModel(ModelBuilder modelBuilder)
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-#pragma warning disable 612, 618
-        modelBuilder.HasAnnotation("ProductVersion", "10.0.12").HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-        modelBuilder.UseIdentityByDefaultColumns();
-
-        modelBuilder.Entity("Eigakan.Models.Anime", b =>
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
-            b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uuid");
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "10.0.12")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            b.Property<DateOnly?>("AiredFrom").HasColumnType("date");
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            b.Property<DateOnly?>("AiredTo").HasColumnType("date");
+            modelBuilder.Entity("Eigakan.Models.Anime", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
-            b.Property<int?>("Episodes").HasColumnType("integer");
+                    b.Property<DateOnly?>("AiredFrom")
+                        .HasColumnType("date");
 
-            b.Property<string>("ImageSource").HasColumnType("text");
+                    b.Property<DateOnly?>("AiredTo")
+                        .HasColumnType("date");
 
-            b.Property<string>("JapaneseTitle").HasColumnType("text");
+                    b.Property<int?>("Episodes")
+                        .HasColumnType("integer");
 
-            b.Property<decimal?>("Score").HasPrecision(4, 2).HasColumnType("numeric(4,2)");
+                    b.Property<string>("ImageSource")
+                        .HasColumnType("text");
 
-            b.Property<string>("Status").IsRequired().HasColumnType("text");
+                    b.Property<string>("JapaneseTitle")
+                        .HasColumnType("text");
 
-            b.Property<string>("Synopsis").HasColumnType("text");
+                    b.Property<decimal?>("Score")
+                        .HasPrecision(4, 2)
+                        .HasColumnType("numeric(4,2)");
 
-            b.Property<string>("Title").IsRequired().HasColumnType("text");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-            b.Property<string>("Type").IsRequired().HasColumnType("text");
+                    b.Property<string>("Synopsis")
+                        .HasColumnType("text");
 
-            b.HasKey("Id");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-            b.ToTable("Animes");
-        });
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Animes");
+                });
 #pragma warning restore 612, 618
+        }
     }
 }
