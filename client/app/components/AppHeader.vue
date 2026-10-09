@@ -10,6 +10,12 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path.startsWith('/animes'),
     icon: 'i-lucide-tv-minimal-play',
   },
+  {
+    label: 'Mangas',
+    to: '/mangas',
+    active: route.path.startsWith('/mangas'),
+    icon: 'i-lucide-book',
+  },
 ]);
 </script>
 
