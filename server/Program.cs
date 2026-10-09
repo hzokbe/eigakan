@@ -1,4 +1,6 @@
 using Eigakan.Data;
+using Eigakan.Repositories;
+using Eigakan.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,10 @@ builder.Services.AddHealthChecks().AddDbContextCheck<AppDbContext>();
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+
+builder.Services.AddScoped<IAnimeService, AnimeService>();
 
 var app = builder.Build();
 
