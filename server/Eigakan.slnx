@@ -3,4 +3,5 @@
     <File Path=".editorconfig" />
   </Folder>
   <Project Path="Eigakan.csproj" />
+  <Project Path="Eigakan.Tests/Eigakan.Tests.csproj" />
 </Solution>
