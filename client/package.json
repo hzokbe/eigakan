@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.141",
+    "@iconify-json/simple-icons": "^1.2.99",
     "@nuxt/eslint": "^1.17.0",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
