@@ -1,8 +1,27 @@
+<script lang="ts" setup>
+import type { NavigationMenuItem } from '@nuxt/ui/components/NavigationMenu.vue';
+
+const route = useRoute();
+
+const items = computed<NavigationMenuItem[]>(() => [
+  {
+    label: 'Animes',
+    to: '/animes',
+    active: route.path.startsWith('/animes'),
+    icon: 'i-lucide-tv-minimal-play',
+  },
+]);
+</script>
+
 <template>
-  <UHeader :toggle="false" :ui="{ title: 'items-center gap-2' }" to="/">
+  <UHeader :ui="{ title: 'items-center gap-2' }" to="/">
     <template #title>
       <UIcon class="size-5 text-primary" name="i-lucide-clapperboard" />
       Eigakan
+    </template>
+    <UNavigationMenu :items="items" />
+    <template #body>
+      <UNavigationMenu :items="items" orientation="vertical" />
     </template>
     <template #right>
       <UColorModeButton />
