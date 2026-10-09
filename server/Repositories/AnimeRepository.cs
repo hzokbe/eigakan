@@ -8,6 +8,6 @@ public class AnimeRepository(AppDbContext context) : IAnimeRepository
 {
     public async Task<List<Anime>> GetAllAsync()
     {
-        return await context.Animes.AsNoTracking().OrderBy(a => a.Score).ToListAsync();
+        return await context.Animes.AsNoTracking().OrderByDescending(a => a.Score).ToListAsync();
     }
 }
