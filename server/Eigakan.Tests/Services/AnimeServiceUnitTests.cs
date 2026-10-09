@@ -85,4 +85,89 @@ public class AnimeServiceUnitTests
 
         _repository.Verify(r => r.GetAllAsync(), Times.Once);
     }
+
+    [Fact]
+    public async Task GetByIdAsync_ReturnsNull()
+    {
+        var id = Guid.NewGuid();
+
+        var anime = new Anime
+        {
+            Id = id,
+            Title = "Cowboy Bebop",
+            JapaneseTitle = "カウボーイビバップ",
+            Synopsis = "Space bounty hunters",
+            Type = AnimeType.TV,
+            Episodes = 26,
+            Status = AnimeStatus.FinishedAiring,
+            AiredFrom = new DateOnly(1998, 4, 3),
+            AiredTo = new DateOnly(1999, 4, 24),
+            Score = 8.75m,
+            ImageSource = "/images/anime/" + id
+        };
+
+        _repository.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(anime);
+
+        var anotherId = Guid.NewGuid();
+
+        var result = await _service.GetByIdAsync(anotherId);
+
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_ReturnsAnime()
+    {
+        var id = Guid.NewGuid();
+
+        var anime = new Anime
+        {
+            Id = id,
+            Title = "Cowboy Bebop",
+            JapaneseTitle = "カウボーイビバップ",
+            Synopsis = "Space bounty hunters",
+            Type = AnimeType.TV,
+            Episodes = 26,
+            Status = AnimeStatus.FinishedAiring,
+            AiredFrom = new DateOnly(1998, 4, 3),
+            AiredTo = new DateOnly(1999, 4, 24),
+            Score = 8.75m,
+            ImageSource = "/images/anime/" + id
+        };
+
+        _repository.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(anime);
+
+        var result = await _service.GetByIdAsync(id);
+
+        Assert.NotNull(result);
+
+        Assert.Equal(anime.Id, result.Id);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_CallsRepositoryOnce()
+    {
+        var id = Guid.NewGuid();
+
+        var anime = new Anime
+        {
+            Id = id,
+            Title = "Cowboy Bebop",
+            JapaneseTitle = "カウボーイビバップ",
+            Synopsis = "Space bounty hunters",
+            Type = AnimeType.TV,
+            Episodes = 26,
+            Status = AnimeStatus.FinishedAiring,
+            AiredFrom = new DateOnly(1998, 4, 3),
+            AiredTo = new DateOnly(1999, 4, 24),
+            Score = 8.75m,
+            ImageSource = "/images/anime/" + id
+        };
+
+        _repository.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(anime);
+
+        await _service.GetByIdAsync(id);
+
+        _repository.Verify(r => r.GetByIdAsync(id), Times.Once);
+    }
 }

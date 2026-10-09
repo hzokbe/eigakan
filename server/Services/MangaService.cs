@@ -11,6 +11,11 @@ public class MangaService(IMangaRepository repository) : IMangaService
         return [.. (await repository.GetAllAsync()).Select(ToResponse)];
     }
 
+    public async Task<MangaResponse?> GetByIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
     private static MangaResponse ToResponse(Manga manga)
     {
         return new MangaResponse(
