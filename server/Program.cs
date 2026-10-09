@@ -29,6 +29,10 @@ builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 
 builder.Services.AddScoped<IAnimeService, AnimeService>();
 
+builder.Services.AddScoped<IMangaRepository, MangaRepository>();
+
+builder.Services.AddScoped<IMangaService, MangaService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment()) app.MapOpenApi();
