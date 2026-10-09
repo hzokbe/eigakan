@@ -2,7 +2,4 @@ using Eigakan.DTO;
 
 namespace Eigakan.Services;
 
-public interface IAnimeService
-{
-    public Task<List<AnimeResponse>> GetAllAsync();
-}
+public interface IAnimeService : IService<AnimeResponse>;

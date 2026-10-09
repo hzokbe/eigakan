@@ -8,10 +8,10 @@ public class AnimeService(IAnimeRepository repository) : IAnimeService
 {
     public async Task<List<AnimeResponse>> GetAllAsync()
     {
-        return [.. (await repository.GetAllAsync()).Select(ToAnimeResponse)];
+        return [.. (await repository.GetAllAsync()).Select(ToResponse)];
     }
 
-    private static AnimeResponse ToAnimeResponse(Anime anime)
+    private static AnimeResponse ToResponse(Anime anime)
     {
         return new AnimeResponse(
             anime.Id,
