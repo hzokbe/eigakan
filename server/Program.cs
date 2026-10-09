@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Eigakan.Data;
 using Eigakan.Repositories;
 using Eigakan.Services;
@@ -17,7 +18,10 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connect
 
 builder.Services.AddHealthChecks().AddDbContextCheck<AppDbContext>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 builder.Services.AddOpenApi();
 
