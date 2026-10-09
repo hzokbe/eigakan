@@ -1,11 +1,12 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=19a7576d_002D0557_002D4efc_002D93ab_002D86c19f2b375c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllAsync_ReturnsEmptyList_WhenThereAreNoAnimes" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=19a7576d_002D0557_002D4efc_002D93ab_002D86c19f2b375c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAllAsync_ReturnsEmptyList_WhenThereAreNoAnimes" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::34EBD604-937C-7B10-1EEC-17CF222CDC70::net10.0::Eigakan.Tests.Repositories.AnimeRepositoryUnitTests.GetAllAsync_ReturnsEmptyList_WhenThereAreNoAnimes&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::34EBD604-937C-7B10-1EEC-17CF222CDC70::net10.0::Eigakan.Tests.Services.AnimeServiceUnitTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::34EBD604-937C-7B10-1EEC-17CF222CDC70::net10.0::Eigakan.Tests.Repositories.MangaRepositoryUnitTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4664c257_002D4266_002D46ee_002Db614_002De9ed88eaf69d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AnimeRepositoryUnitTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4664c257_002D4266_002D46ee_002Db614_002De9ed88eaf69d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AnimeRepositoryUnitTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::34EBD604-937C-7B10-1EEC-17CF222CDC70::net10.0::Eigakan.Tests.Repositories.AnimeRepositoryUnitTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::34EBD604-937C-7B10-1EEC-17CF222CDC70::net10.0::Eigakan.Tests.Controllers.AnimeControllerTests&lt;/TestId&gt;
