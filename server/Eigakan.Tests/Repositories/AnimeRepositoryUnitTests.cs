@@ -59,7 +59,7 @@ public class AnimeRepositoryUnitTests
         var result = await repository.GetAllAsync();
 
         string[] expected =
-            ["Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen", "Steins;Gate", "Sousou no Frieren"];
+            ["Sousou no Frieren", "Steins;Gate", "Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen"];
 
         Assert.Equal(expected, result.Select(a => a.Title));
     }
