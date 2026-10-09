@@ -2,4 +2,4 @@ using Eigakan.Models;
 
 namespace Eigakan.Repositories;
 
-public interface IAnimeRepository : IRepository<Anime>;
+public interface IMangaRepository : IRepository<Manga>;
