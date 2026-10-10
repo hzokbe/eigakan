@@ -10,6 +10,7 @@ const { animes } = useAnimes();
   >
     <AnimeCard
       v-for="anime in animes"
+      :id="anime.id"
       :key="anime.id"
       :episodes="anime.episodes"
       :image-source="anime.imageSource"
