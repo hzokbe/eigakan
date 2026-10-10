@@ -79,4 +79,38 @@ public class MangaRepositoryUnitTests
 
         Assert.Empty(context.ChangeTracker.Entries());
     }
+
+    [Fact]
+    public async Task GetByIdAsync_DoesNotTrackReturnedEntity()
+    {
+        var options = CreateOptions();
+
+        await using var context = new AppDbContext(options);
+
+        var repository = new MangaRepository(context);
+
+        var manga = await repository.GetByIdAsync(Guid.NewGuid());
+
+        Assert.Null(manga);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_ReturnsManga()
+    {
+        var options = CreateOptions();
+
+        await using var context = new AppDbContext(options);
+
+        var manga = CreateManga("Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen", 8.88m);
+
+        await SeedAsync(options, manga);
+
+        var repository = new MangaRepository(context);
+
+        var result = await repository.GetByIdAsync(manga.Id);
+
+        Assert.NotNull(manga);
+
+        Assert.Equal(manga.Id, result!.Id);
+    }
 }

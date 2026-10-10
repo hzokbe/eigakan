@@ -13,6 +13,6 @@ public class MangaRepository(AppDbContext context) : IMangaRepository
 
     public async Task<Manga?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await context.Mangas.FirstOrDefaultAsync(m => m.Id == id);
     }
 }
