@@ -10,6 +10,7 @@ const { mangas } = useMangas();
   >
     <MangaCard
       v-for="manga in mangas"
+      :id="manga.id"
       :key="manga.id"
       :chapters="manga.chapters"
       :image-source="manga.imageSource"

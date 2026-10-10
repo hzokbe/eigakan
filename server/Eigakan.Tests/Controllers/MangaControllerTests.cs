@@ -1,6 +1,7 @@
 using Eigakan.Controllers;
 using Eigakan.DTO;
 using Eigakan.Enums;
+using Eigakan.Models;
 using Eigakan.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -16,6 +17,33 @@ public class MangaControllerTests
     public MangaControllerTests()
     {
         _controller = new MangaController(_service.Object);
+    }
+
+    private static Manga CreateManga(string title, decimal score)
+    {
+        return new Manga
+        {
+            Id = Guid.NewGuid(),
+            Title = title,
+            Score = score
+        };
+    }
+
+    private static MangaResponse ToResponse(Manga manga)
+    {
+        return new MangaResponse(
+            manga.Id,
+            manga.Title,
+            manga.JapaneseTitle,
+            manga.Synopsis,
+            manga.Chapters,
+            manga.Volumes,
+            manga.Status,
+            manga.PublishedFrom,
+            manga.PublishedTo,
+            manga.Score,
+            manga.ImageSource
+        );
     }
 
     [Fact]
@@ -61,5 +89,35 @@ public class MangaControllerTests
         await _controller.GetAllAsync();
 
         _service.Verify(s => s.GetAllAsync(), Times.Once);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_WhenServiceReturnsManga_ReturnsOk()
+    {
+        var id = Guid.NewGuid();
+
+        var anime = CreateManga("Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen", 8.88m);
+
+        var response = ToResponse(anime);
+
+        _service.Setup(s => s.GetByIdAsync(id)).ReturnsAsync(response);
+
+        var result = await _controller.GetByIdAsync(id);
+
+        Assert.IsType<OkObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_WhenServiceReturnsEmpty_ReturnsNotFound()
+    {
+        var id = Guid.NewGuid();
+
+        MangaResponse? response = null;
+
+        _service.Setup(s => s.GetByIdAsync(id)).ReturnsAsync(response);
+
+        var result = await _controller.GetByIdAsync(id);
+
+        Assert.IsType<NotFoundResult>(result.Result);
     }
 }
