@@ -85,4 +85,89 @@ public class MangaServiceUnitTests
 
         _repository.Verify(r => r.GetAllAsync(), Times.Once);
     }
+
+    [Fact]
+    public async Task GetByIdAsync_ReturnsNull()
+    {
+        var id = Guid.NewGuid();
+
+        var manga = new Manga
+        {
+            Id = id,
+            Title = "Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen",
+            JapaneseTitle = "かぐや様は告らせたい～天才たちの恋愛頭脳戦～",
+            Synopsis = "Space bounty hunters",
+            Chapters = 281,
+            Volumes = 28,
+            Status = MangaStatus.Finished,
+            PublishedFrom = new DateOnly(2015, 5, 19),
+            PublishedTo = new DateOnly(2022, 11, 2),
+            Score = 8.88m,
+            ImageSource = "/images/manga/" + id
+        };
+
+        _repository.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(manga);
+
+        var anotherId = Guid.NewGuid();
+
+        var result = await _service.GetByIdAsync(anotherId);
+
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_ReturnsManga()
+    {
+        var id = Guid.NewGuid();
+
+        var manga = new Manga
+        {
+            Id = id,
+            Title = "Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen",
+            JapaneseTitle = "かぐや様は告らせたい～天才たちの恋愛頭脳戦～",
+            Synopsis = "Space bounty hunters",
+            Chapters = 281,
+            Volumes = 28,
+            Status = MangaStatus.Finished,
+            PublishedFrom = new DateOnly(2015, 5, 19),
+            PublishedTo = new DateOnly(2022, 11, 2),
+            Score = 8.88m,
+            ImageSource = "/images/manga/" + id
+        };
+
+        _repository.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(manga);
+
+        var result = await _service.GetByIdAsync(id);
+
+        Assert.NotNull(result);
+
+        Assert.Equal(manga.Id, result.Id);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_CallsRepositoryOnce()
+    {
+        var id = Guid.NewGuid();
+
+        var manga = new Manga
+        {
+            Id = id,
+            Title = "Kaguya-sama wa Kokurasetai: Tensai-tachi no Renai Zunousen",
+            JapaneseTitle = "かぐや様は告らせたい～天才たちの恋愛頭脳戦～",
+            Synopsis = "Space bounty hunters",
+            Chapters = 281,
+            Volumes = 28,
+            Status = MangaStatus.Finished,
+            PublishedFrom = new DateOnly(2015, 5, 19),
+            PublishedTo = new DateOnly(2022, 11, 2),
+            Score = 8.88m,
+            ImageSource = "/images/manga/" + id
+        };
+
+        _repository.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(manga);
+
+        await _service.GetByIdAsync(id);
+
+        _repository.Verify(r => r.GetByIdAsync(id), Times.Once);
+    }
 }
