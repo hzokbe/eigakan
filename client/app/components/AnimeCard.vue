@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
+  id: string;
+
   title: string;
 
   japaneseTitle: string | null;
@@ -24,7 +26,7 @@ defineProps<{
     }"
   >
     <template #header>
-      <NuxtLink to="/">
+      <NuxtLink :to="`/animes/${id}`">
         <img
           :alt="title"
           :src="imageSource ?? ''"
@@ -34,8 +36,8 @@ defineProps<{
       </NuxtLink>
       <div class="flex flex-1 flex-col gap-2">
         <NuxtLink
+          :to="`/animes/${id}`"
           class="flex flex-col gap-1 hover:brightness-70 transition-all duration-250 ease-in-out w-fit"
-          to="/"
         >
           <h3 class="w-fit text-xl font-bold">
             {{ title }}
@@ -65,7 +67,6 @@ defineProps<{
             {{ score ?? 0.0 }}
           </UBadge>
         </AppTooltip>
-
         <AppTooltip text="Episodes">
           <UBadge
             class="select-none"
@@ -76,7 +77,6 @@ defineProps<{
             {{ episodes ?? 0 }}
           </UBadge>
         </AppTooltip>
-
         <AppTooltip text="Type">
           <UBadge
             class="select-none"
