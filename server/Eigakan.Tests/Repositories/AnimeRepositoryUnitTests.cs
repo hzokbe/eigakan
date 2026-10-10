@@ -79,4 +79,38 @@ public class AnimeRepositoryUnitTests
 
         Assert.Empty(context.ChangeTracker.Entries());
     }
+
+    [Fact]
+    public async Task GetByIdAsync_DoesNotTrackReturnedEntity()
+    {
+        var options = CreateOptions();
+
+        await using var context = new AppDbContext(options);
+
+        var repository = new AnimeRepository(context);
+
+        var anime = await repository.GetByIdAsync(Guid.NewGuid());
+
+        Assert.Null(anime);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_ReturnsAnime()
+    {
+        var options = CreateOptions();
+
+        await using var context = new AppDbContext(options);
+
+        var anime = CreateAnime("Steins;Gate", 9.07m);
+
+        await SeedAsync(options, anime);
+
+        var repository = new AnimeRepository(context);
+
+        var result = await repository.GetByIdAsync(anime.Id);
+
+        Assert.NotNull(anime);
+
+        Assert.Equal(anime.Id, result!.Id);
+    }
 }

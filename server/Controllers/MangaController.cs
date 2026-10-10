@@ -13,4 +13,9 @@ public class MangaController(IMangaService service) : ControllerBase, IMangaCont
     {
         return Ok(await service.GetAllAsync());
     }
+
+    public async Task<ActionResult<MangaResponse?>> GetByIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

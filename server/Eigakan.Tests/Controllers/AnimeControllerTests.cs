@@ -1,6 +1,7 @@
 using Eigakan.Controllers;
 using Eigakan.DTO;
 using Eigakan.Enums;
+using Eigakan.Models;
 using Eigakan.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -16,6 +17,33 @@ public class AnimeControllerTests
     public AnimeControllerTests()
     {
         _controller = new AnimeController(_service.Object);
+    }
+
+    private static Anime CreateAnime(string title, decimal score)
+    {
+        return new Anime
+        {
+            Id = Guid.NewGuid(),
+            Title = title,
+            Score = score
+        };
+    }
+
+    private static AnimeResponse ToResponse(Anime anime)
+    {
+        return new AnimeResponse(
+            anime.Id,
+            anime.Title,
+            anime.JapaneseTitle,
+            anime.Synopsis,
+            anime.Type,
+            anime.Episodes,
+            anime.Status,
+            anime.AiredFrom,
+            anime.AiredTo,
+            anime.Score,
+            anime.ImageSource
+        );
     }
 
     [Fact]
@@ -62,5 +90,35 @@ public class AnimeControllerTests
         await _controller.GetAllAsync();
 
         _service.Verify(s => s.GetAllAsync(), Times.Once);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_WhenServiceReturnsAnime_ReturnsOk()
+    {
+        var id = Guid.NewGuid();
+
+        var anime = CreateAnime("Steins;Gate", 9.07m);
+
+        var response = ToResponse(anime);
+
+        _service.Setup(s => s.GetByIdAsync(id)).ReturnsAsync(response);
+
+        var result = await _controller.GetByIdAsync(id);
+
+        Assert.IsType<OkObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_WhenServiceReturnsEmpty_ReturnsNotFound()
+    {
+        var id = Guid.NewGuid();
+
+        AnimeResponse? response = null;
+
+        _service.Setup(s => s.GetByIdAsync(id)).ReturnsAsync(response);
+
+        var result = await _controller.GetByIdAsync(id);
+
+        Assert.IsType<NotFoundResult>(result.Result);
     }
 }
